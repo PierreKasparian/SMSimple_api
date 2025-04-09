@@ -12,7 +12,7 @@ const page = async () => {
   if (!user.data.user?.id) {
     redirect("/login");
   }
-console.log(process.env.SITE_URL)
+console.log('caca',process.env.SITE_URL)
   return (
     <div className="flex flex-col min-h-screen">
     <NavBar />
