@@ -3,16 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "flask-dev": "echo 'Starting FastAPI server...' && pip install -r requirements.txt && echo 'Dependencies installed' && uvicorn api.main:app --reload --port 5328 --host 0.0.0.0",
+    "flask-dev": "echo 'Starting FastAPI server...' && pip install -r requirements.txt && echo 'Dependencies installed'",
     "dev": "concurrently \"next dev --turbopack\" \"npm run flask-dev\"",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
+    "@radix-ui/react-slot": "^1.2.0",
     "@supabase/ssr": "^0.6.1",
     "@supabase/supabase-js": "^2.49.4",
+    "class-variance-authority": "^0.7.1",
     "concurrently": "^9.1.2",
+    "lucide-react": "^0.487.0",
     "next": "15.2.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
