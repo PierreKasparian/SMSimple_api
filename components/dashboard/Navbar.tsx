@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { MessageSquare } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import LogoutButton from "./LogoutButton"
 
 export function NavBar() {
   return (
@@ -23,12 +24,10 @@ export function NavBar() {
           <Link href="/sms-history" className="text-sm font-medium hover:text-primary transition-colors">
             SMS History
           </Link>
-          <Link href="/purchase-credits" className="text-sm font-medium hover:text-primary transition-colors">
+          <Link href="/dashboard/purchase-credits" className="text-sm font-medium hover:text-primary transition-colors">
             Purchase Credits
           </Link>
-          <Button variant="outline" asChild>
-            <Link href="/logout">Logout</Link>
-          </Button>
+          <LogoutButton />
         </nav>
 
         {/* Mobile menu button */}

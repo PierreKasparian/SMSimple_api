@@ -3,12 +3,21 @@
     {
       "src": "sms-api/main.py",
       "use": "@vercel/python"
+    },
+    {
+      "src": "package.json",
+      "use": "@vercel/next"
     }
   ],
   "routes": [
     {
       "src": "/sms-api/(.*)",
       "dest": "sms-api/main.py"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1",
+      "continue": true
     }
   ]
 }

@@ -29,13 +29,13 @@ const Navbar = ({ variant = 'default' }: NavbarProps) => {
         </Link>
 
         <nav className="hidden md:flex gap-6">
-          <Link href="#features" className="text-sm font-medium hover:underline underline-offset-4">
+          <Link href="/#features" className="text-sm font-medium hover:underline underline-offset-4">
             Features
           </Link>
-          <Link href="#testimonials" className="text-sm font-medium hover:underline underline-offset-4">
+          <Link href="/#testimonials" className="text-sm font-medium hover:underline underline-offset-4">
             Testimonials
           </Link>
-          <Link href="/purchase-credits" className="text-sm font-medium hover:underline underline-offset-4">
+          <Link href="/#pricing" className="text-sm font-medium hover:underline underline-offset-4">
             Pricing
           </Link>
         </nav>

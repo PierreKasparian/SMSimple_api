@@ -3,7 +3,7 @@ import React from "react";
 import Link from "next/link"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Check, Sparkles, Zap } from "lucide-react"
-import NavBar from "@/components/Navbar"
+import {NavBar} from "@/components/dashboard/Navbar"
 import BuyButton from "@/components/BuyButton"
 import { redirect } from "next/navigation";
 const page = async () => {
@@ -12,7 +12,6 @@ const page = async () => {
   if (!user.data.user?.id) {
     redirect("/login");
   }
-console.log('caca',process.env.SITE_URL)
   return (
     <div className="flex flex-col min-h-screen">
     <NavBar />

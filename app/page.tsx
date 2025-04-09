@@ -26,18 +26,18 @@ export default async function Home() {
         <div className=" px-4 md:px-6">
           <div className="flex flex-col items-center space-y-4 text-center">
             <div className="space-y-2">
-              <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
-                SMS Integration Made{" "}
-                <span className="text-primary">Simple</span>
+              <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none mb-8">
+                SMS integration made{" "}
+                <span className="text-primary">simple</span>
               </h1>
               <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">
                 Powerful SMS API for developers. Send messages worldwide with
-                just a few lines of code.
+                just a one line of code.
               </p>
             </div>
             <div className="flex flex-col gap-2 min-[400px]:flex-row">
               <Button size="lg" asChild>
-                <Link href="/signup">
+                <Link href="/login">
                   Get Started for free<ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
@@ -88,7 +88,7 @@ export default async function Home() {
                 <MessageSquare className="h-10 w-10 text-primary mb-2" />
                 <CardTitle>Global Reach</CardTitle>
                 <CardDescription>
-                  Send SMS to over 190 countries with local number support
+                  Send SMS all over the world with local number support
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -397,7 +397,7 @@ console.log(response.messageId);`}
               </CardContent>
               <CardFooter>
                 <Button className="w-full" asChild>
-                  <Link href="/signup">Get Started</Link>
+                  <Link href="/login">Get Started</Link>
                 </Button>
               </CardFooter>
             </Card>
@@ -506,7 +506,7 @@ console.log(response.messageId);`}
               </CardContent>
               <CardFooter>
                 <Button className="w-full" asChild>
-                  <Link href="/signup">Get Started</Link>
+                  <Link href="/login">Get Started</Link>
                 </Button>
               </CardFooter>
             </Card>
@@ -663,7 +663,7 @@ console.log(response.messageId);`}
             </div>
             <div className="flex flex-col gap-2 min-[400px]:flex-row">
               <Button size="lg" variant="secondary" asChild>
-                <Link href="/signup">Create Free Account</Link>
+                <Link href="/login">Create Free Account</Link>
               </Button>
               <Button
                 size="lg"
@@ -671,7 +671,7 @@ console.log(response.messageId);`}
                 className="bg-transparent text-primary-foreground border-primary-foreground/20 hover:bg-primary-foreground/10"
                 asChild
               >
-                <Link href="/contact">Contact Sales</Link>
+                <Link href="mailto:ia.school.app@gmail.com">Contact Sales</Link>
               </Button>
             </div>
           </div>

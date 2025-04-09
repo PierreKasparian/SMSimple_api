@@ -145,23 +145,6 @@ export default function LoginForm() {
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="border-t py-6 md:py-0">
-        <div className="container flex flex-col md:h-16 items-center justify-between gap-4 md:flex-row px-4 md:px-6">
-          <p className="text-sm text-gray-500">© {new Date().getFullYear()} SMSify. All rights reserved.</p>
-          <nav className="flex gap-4 sm:gap-6">
-            <Link href="/terms" className="text-sm text-gray-500 hover:underline">
-              Terms
-            </Link>
-            <Link href="/privacy" className="text-sm text-gray-500 hover:underline">
-              Privacy
-            </Link>
-            <Link href="/contact" className="text-sm text-gray-500 hover:underline">
-              Contact
-            </Link>
-          </nav>
-        </div>
-      </footer>
     </div>
   )
 }
