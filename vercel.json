@@ -1,8 +1,14 @@
 {
-    "routes": [
-        {
-            "src": "/sms-api/(.*)",
-            "dest": "sms-api/main.py"
-        }
-    ]
+  "builds": [
+    {
+      "src": "sms-api/main.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/sms-api/(.*)",
+      "dest": "sms-api/main.py"
+    }
+  ]
 }
