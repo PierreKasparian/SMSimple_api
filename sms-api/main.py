@@ -34,10 +34,19 @@ print("coucou les mecs")
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # Your Next.js frontend URL
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_origins=["*"],  # Allow all origins
+    allow_credentials=False,  # Disable credentials when using *
+    allow_methods=["GET", "POST"],  # Only allow necessary methods
+    allow_headers=[
+        "Content-Type",
+        "Authorization",  # For API key
+        "X-API-Key"       # Alternative API key header
+    ],
+    expose_headers=[
+        "X-Request-ID",
+        "X-API-Version"
+    ],
+    max_age=600  # Cache preflight requests for 10 minutes
 )
 
 
