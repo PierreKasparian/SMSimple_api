@@ -29,6 +29,8 @@ client = Client(account_sid, auth_token)
 # Initialize FastAPI app
 app = FastAPI()
 
+
+print("coucou les mecs")
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
