@@ -9,9 +9,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { MessageSquare, Zap, Shield, ArrowRight } from "lucide-react";
+import { MessageSquare, Zap, Shield, ArrowRight, User } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import { createClient } from "@/utils/supabase/server";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 export default async function Home() {
   const supabase = await createClient();
 
@@ -38,11 +39,12 @@ export default async function Home() {
             <div className="flex flex-col gap-2 min-[400px]:flex-row">
               <Button size="lg" asChild>
                 <Link href="/login">
-                  Get Started for free<ArrowRight className="ml-2 h-4 w-4" />
+                  Get free credits
+                  <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
               <Button size="lg" variant="outline" asChild>
-                <Link href="/docs">View Documentation</Link>
+                  <Link href="/#code-example">View Documentation</Link>
               </Button>
             </div>
           </div>
@@ -97,7 +99,7 @@ export default async function Home() {
       </section>
 
       {/* Code Example */}
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-50 px-7">
+      <section id="code-example" className="w-full py-12 md:py-24 lg:py-32 bg-gray-50 px-7">
         <div className=" px-4 md:px-6">
           <div className="grid gap-6 lg:grid-cols-2 lg:gap-12">
             <div className="flex flex-col justify-center space-y-4">
@@ -123,19 +125,20 @@ export default async function Home() {
               <div className="p-6 pt-0">
                 <pre className="text-sm text-left overflow-x-auto">
                   <code className="language-javascript">
-                    {`// Install: npm install smsimplapi
-import { SMSimplAPI } from 'SMSimplAPI';
-
-// Initialize with your API key
-const sms = new SMSimplAPI('YOUR_API_KEY');
-
-// Send a message
-const response = await sms.send({
-  to: '+1234567890',
-  message: 'Hello from SMSimplAPI!',
+                    {`// Send a message
+const response = await fetch('https://smsimple-api.vercel.app/sms-api/sendsms/', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    to: '+1234567890',
+    message: 'Hello from SMSimplAPI!',
+    apiKey: 'YOUR_API_KEY'
+  })
 });
 
-console.log(response.messageId);`}
+console.log(response);`}
                   </code>
                 </pre>
               </div>
@@ -158,19 +161,18 @@ console.log(response.messageId);`}
             </div>
           </div>
           <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 md:grid-cols-2 lg:grid-cols-3">
-            <Card>
+            <Card className="min-h-[285px]">
               <CardHeader>
                 <div className="flex items-center gap-4">
-                  <Image
-                    src="/placeholder.svg?height=50&width=50"
-                    alt="Sarah Johnson"
-                    width={50}
-                    height={50}
-                    className="rounded-full object-cover"
-                  />
+                  <Avatar>
+                    <AvatarImage src="/placeholder.svg?height=50&width=50"  />
+                    <AvatarFallback>
+                      <User className="h-6 w-6" />
+                    </AvatarFallback>
+                  </Avatar>
                   <div>
                     <CardTitle className="text-lg">Sarah Johnson</CardTitle>
-                    <CardDescription>CTO at TechStart</CardDescription>
+                    <CardDescription>CTO at Adonis</CardDescription>
                   </div>
                 </div>
               </CardHeader>
@@ -204,17 +206,16 @@ console.log(response.messageId);`}
             <Card>
               <CardHeader>
                 <div className="flex items-center gap-4">
-                  <Image
-                    src="/placeholder.svg?height=50&width=50"
-                    alt="David Chen"
-                    width={50}
-                    height={50}
-                    className="rounded-full object-cover"
-                  />
+                  <Avatar>
+                    <AvatarImage src="/placeholder.svg?height=50&width=50" alt="Sarah Johnson" />
+                    <AvatarFallback>
+                      <User className="h-6 w-6" />
+                    </AvatarFallback>
+                  </Avatar>
                   <div>
                     <CardTitle className="text-lg">David Chen</CardTitle>
                     <CardDescription>
-                      Lead Developer at AppWorks
+                      Lead Developer at JuniorAI
                     </CardDescription>
                   </div>
                 </div>
@@ -249,16 +250,15 @@ console.log(response.messageId);`}
             <Card>
               <CardHeader>
                 <div className="flex items-center gap-4">
-                  <Image
-                    src="/placeholder.svg?height=50&width=50"
-                    alt="Maria Rodriguez"
-                    width={50}
-                    height={50}
-                    className="rounded-full object-cover"
-                  />
+                  <Avatar>
+                    <AvatarImage src="/placeholder.svg?height=50&width=50" alt="Maria Rodriguez" />
+                    <AvatarFallback>
+                      <User className="h-6 w-6" />
+                    </AvatarFallback>
+                  </Avatar>
                   <div>
                     <CardTitle className="text-lg">Maria Rodriguez</CardTitle>
-                    <CardDescription>Founder at NotifyMe</CardDescription>
+                    <CardDescription>Founder at MathIndices</CardDescription>
                   </div>
                 </div>
               </CardHeader>
@@ -307,6 +307,8 @@ console.log(response.messageId);`}
               <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                 Choose the plan that&apos;s right for your business. No hidden
                 fees or long-term contracts.
+                <br />
+                For each inscription, get 3 SMS for free to test our service.
               </p>
             </div>
           </div>
@@ -316,16 +318,15 @@ console.log(response.messageId);`}
               <CardHeader>
                 <CardTitle className="text-xl">Starter</CardTitle>
                 <CardDescription>
-                  Perfect for small businesses and startups
+                  Perfect for testing our service
                 </CardDescription>
                 <div className="mt-4">
-                  <span className="text-4xl font-bold">$29</span>
-                  <span className="text-gray-500 ml-1">/month</span>
+                  <span className="text-4xl font-bold">2€</span>
                 </div>
               </CardHeader>
               <CardContent className="flex-1">
                 <ul className="space-y-2 text-sm">
-                  <li className="flex items-center">
+                <li className="flex items-center">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -340,7 +341,7 @@ console.log(response.messageId);`}
                     >
                       <polyline points="20 6 9 17 4 12"></polyline>
                     </svg>
-                    <span>1,000 SMS messages/month</span>
+                    <span>50 SMS</span>
                   </li>
                   <li className="flex items-center">
                     <svg
@@ -357,8 +358,9 @@ console.log(response.messageId);`}
                     >
                       <polyline points="20 6 9 17 4 12"></polyline>
                     </svg>
-                    <span>Basic API access</span>
+                    <span>Validity: forever</span>
                   </li>
+
                   <li className="flex items-center">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -374,24 +376,7 @@ console.log(response.messageId);`}
                     >
                       <polyline points="20 6 9 17 4 12"></polyline>
                     </svg>
-                    <span>Email support</span>
-                  </li>
-                  <li className="flex items-center">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="h-4 w-4 mr-2 text-primary"
-                    >
-                      <polyline points="20 6 9 17 4 12"></polyline>
-                    </svg>
-                    <span>Delivery reports</span>
+                    <span>Webhooks</span>
                   </li>
                 </ul>
               </CardContent>
@@ -411,13 +396,12 @@ console.log(response.messageId);`}
                 <CardTitle className="text-xl">Professional</CardTitle>
                 <CardDescription>Ideal for growing businesses</CardDescription>
                 <div className="mt-4">
-                  <span className="text-4xl font-bold">$99</span>
-                  <span className="text-gray-500 ml-1">/month</span>
+                  <span className="text-4xl font-bold">20€</span>
                 </div>
               </CardHeader>
               <CardContent className="flex-1">
                 <ul className="space-y-2 text-sm">
-                  <li className="flex items-center">
+                <li className="flex items-center">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -432,7 +416,7 @@ console.log(response.messageId);`}
                     >
                       <polyline points="20 6 9 17 4 12"></polyline>
                     </svg>
-                    <span>10,000 SMS messages/month</span>
+                    <span>1000 SMS</span>
                   </li>
                   <li className="flex items-center">
                     <svg
@@ -449,7 +433,7 @@ console.log(response.messageId);`}
                     >
                       <polyline points="20 6 9 17 4 12"></polyline>
                     </svg>
-                    <span>Advanced API features</span>
+                    <span>Validity: forever</span>
                   </li>
                   <li className="flex items-center">
                     <svg
@@ -466,25 +450,9 @@ console.log(response.messageId);`}
                     >
                       <polyline points="20 6 9 17 4 12"></polyline>
                     </svg>
-                    <span>Priority email support</span>
+                    <span>Email support</span>
                   </li>
-                  <li className="flex items-center">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="h-4 w-4 mr-2 text-primary"
-                    >
-                      <polyline points="20 6 9 17 4 12"></polyline>
-                    </svg>
-                    <span>Delivery & read reports</span>
-                  </li>
+
                   <li className="flex items-center">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -517,8 +485,7 @@ console.log(response.messageId);`}
                 <CardTitle className="text-xl">Enterprise</CardTitle>
                 <CardDescription>For large-scale operations</CardDescription>
                 <div className="mt-4">
-                  <span className="text-4xl font-bold">$299</span>
-                  <span className="text-gray-500 ml-1">/month</span>
+                  <span className="text-4xl font-bold">60€</span>
                 </div>
               </CardHeader>
               <CardContent className="flex-1">
@@ -538,7 +505,25 @@ console.log(response.messageId);`}
                     >
                       <polyline points="20 6 9 17 4 12"></polyline>
                     </svg>
-                    <span>50,000 SMS messages/month</span>
+                    <span>5000 SMS</span>
+                  </li>
+
+                  <li className="flex items-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="h-4 w-4 mr-2 text-primary"
+                    >
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    <span>Validity: forever</span>
                   </li>
                   <li className="flex items-center">
                     <svg
@@ -555,7 +540,7 @@ console.log(response.messageId);`}
                     >
                       <polyline points="20 6 9 17 4 12"></polyline>
                     </svg>
-                    <span>Full API access</span>
+                    <span>Advanced email support</span>
                   </li>
                   <li className="flex items-center">
                     <svg
@@ -572,64 +557,13 @@ console.log(response.messageId);`}
                     >
                       <polyline points="20 6 9 17 4 12"></polyline>
                     </svg>
-                    <span>24/7 phone & email support</span>
-                  </li>
-                  <li className="flex items-center">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="h-4 w-4 mr-2 text-primary"
-                    >
-                      <polyline points="20 6 9 17 4 12"></polyline>
-                    </svg>
-                    <span>Advanced analytics</span>
-                  </li>
-                  <li className="flex items-center">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="h-4 w-4 mr-2 text-primary"
-                    >
-                      <polyline points="20 6 9 17 4 12"></polyline>
-                    </svg>
-                    <span>Dedicated account manager</span>
-                  </li>
-                  <li className="flex items-center">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="h-4 w-4 mr-2 text-primary"
-                    >
-                      <polyline points="20 6 9 17 4 12"></polyline>
-                    </svg>
-                    <span>Custom integrations</span>
+                    <span>Webhooks</span>
                   </li>
                 </ul>
               </CardContent>
               <CardFooter>
-                <Button className="w-full" variant="outline" asChild>
-                  <Link href="/contact">Contact Sales</Link>
+                <Button className="w-full" asChild>
+                  <Link href="/login">Get Started</Link>
                 </Button>
               </CardFooter>
             </Card>
@@ -638,7 +572,7 @@ console.log(response.messageId);`}
             <p className="text-sm text-gray-500">
               Need a custom plan?{" "}
               <Link
-                href="/contact"
+                href="mailto:ia.school.app@gmail.com"
                 className="text-primary font-medium hover:underline"
               >
                 Contact our sales team

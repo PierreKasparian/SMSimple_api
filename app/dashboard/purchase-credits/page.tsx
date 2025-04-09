@@ -38,7 +38,7 @@ const page = async () => {
                 <CardTitle className="text-xl">Débutant</CardTitle>
                 <CardDescription>Idéal pour tester notre service</CardDescription>
                 <div className="mt-4">
-                  <span className="text-4xl font-bold">1€</span>
+                  <span className="text-4xl font-bold">2€</span>
                 </div>
               </CardHeader>
               <CardContent className="flex-1">
@@ -70,7 +70,7 @@ const page = async () => {
                 <CardTitle className="text-xl">Professionnel</CardTitle>
                 <CardDescription>Pour les entreprises en croissance</CardDescription>
                 <div className="mt-4">
-                  <span className="text-4xl font-bold">15€</span>
+                  <span className="text-4xl font-bold">20€</span>
                 </div>
               </CardHeader>
               <CardContent className="flex-1">
@@ -108,7 +108,7 @@ const page = async () => {
                 <CardTitle className="text-xl">Entreprise</CardTitle>
                 <CardDescription>Pour les communications à grande échelle</CardDescription>
                 <div className="mt-4">
-                  <span className="text-4xl font-bold">50€</span>
+                  <span className="text-4xl font-bold">60€</span>
                 </div>
               </CardHeader>
               <CardContent className="flex-1">
