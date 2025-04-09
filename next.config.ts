@@ -4,11 +4,11 @@ const nextConfig: NextConfig = {
   rewrites: async () => {
     return [
       {
-        source: '/api/:path*',
+        source: '/sms-api/:path*',
         destination:
           process.env.NODE_ENV === 'development'
-            ? 'http://127.0.0.1:5328/api/:path*'
-            : '/api/',
+            ? 'http://127.0.0.1:5328/sms-api/:path*'
+            : '/sms-api/'
       },
     ]
   },

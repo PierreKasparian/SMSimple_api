@@ -76,7 +76,7 @@ class Item(BaseModel):
     apiKey: str
 
 
-@app.post("/api/sendsms/")
+@app.post("/sms-api/sendsms/")
 async def sendsms(item: Item):
     api_key = item.apiKey
     if not api_key:
@@ -120,41 +120,42 @@ async def sendsms(item: Item):
     return {"response": response_data}
 
 
-@app.get("/api/python")
+@app.get("/sms-api/python")
 async def healthcheck():
     print('coucou')
     return "API working"
 
 
-def generate_api_key():
-    api_key = secrets.token_hex(16)
-    hashed_api_key = hash_api_key(api_key)
-    return {"hashed_api_key": hashed_api_key, "api_key": api_key}
+# def generate_api_key():
+#     api_key = secrets.token_hex(16)
+#     hashed_api_key = hash_api_key(api_key)
+#     return {"hashed_api_key": hashed_api_key, "api_key": api_key}
 
 
-def hash_api_key(api_key: str) -> str:
-    return hashlib.sha256(api_key.encode()).hexdigest()
+# def hash_api_key(api_key: str) -> str:
+#     return hashlib.sha256(api_key.encode()).hexdigest()
 
 
-@app.post("/api/checkout")
-async def create_checkout_session():
-    try:
-        session = stripe.checkout.Session.create(
-            mode='subscription',
-            payment_method_types=['card'],
-            line_items=[{
-                'price': os.getenv('STRIPE_PRICE_ID'),
-            }],
-            success_url=SITE_URL+'dashboard?session_id={CHECKOUT_SESSION_ID}',
-            cancel_url=SITE_URL+'error',
-        )
-        return {"sessionId": session.id,
-                "paymentUrl": session.url}
-    except Exception as e:
-        return {"error": str(e)}
+# @app.post("/sms-api/checkout")
+# async def create_checkout_session():
+#     try:
+#         session = stripe.checkout.Session.create(
+#             mode='subscription',
+#             payment_method_types=['card'],
+#             line_items=[{
+#                 'price': os.getenv('STRIPE_PRICE_ID'),
+#             }],
+#             success_url=SITE_URL+'dashboard?session_id={CHECKOUT_SESSION_ID}',
+#             cancel_url=SITE_URL+'error',
+#         )
+#         return {"sessionId": session.id,
+#                 "paymentUrl": session.url}
+#     except Exception as e:
+#         return {"error": str(e)}
 
+# import requests
 
-@app.post("/api/webhook")
+@app.post("/sms-api/webhook")
 async def stripe_webhook(request: Request):
     payload = await request.body()
     sig_header = request.headers.get('stripe-signature')
@@ -181,24 +182,37 @@ async def stripe_webhook(request: Request):
         # Generate API key
         api_key_data = generate_api_key()
         print(api_key_data)
+        # Get user from supabase
+
         try:
-            response = (
-                supabase.table("API_KEY")
-                .insert({ "api_key": api_key_data['hashed_api_key'], "customer_id": customer_id,
-                         "item_id": item_id})
-                .execute()
-            )
-            # appeler une API qui associe le customer_id au userid du gars connecté
+            # PLUTOT FAIRE UN UPDATE ICI pour ajouter item_id et customer_id
+            url = SITE_URL+"intern_api/"
+            payload = {
+                "customer_id": customer_id,
+                "item_id": item_id
+            }
+
+            headers = {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+
+    # Version avec vérification détaillée
+            response = requests.post(url, json=payload, headers=headers)
+            if (response.status_code != 200):
+                print("Failed to store API key")
+                return {"error": "Failed to store API key"}, 500
         except Exception as e:
             print(e)
             traceback.print_exc()
             return {"error": "Failed to store API key"}, 500
-        # api_keys[api_key_data['hashed_api_key']] = customer_id
         print(f"Customer {customer_id} subscribed to plan {subscription_id}")
     return {"status": "success"}
 
 
-@app.get("/api/usage/{customer_id}")
+
+
+@app.get("/sms-api/usage/{customer_id}")
 async def get_usage(customer_id: str):
     try:
         invoice = stripe.Invoice.upcoming(

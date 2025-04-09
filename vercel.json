@@ -1,8 +1,8 @@
 {
     "routes": [
         {
-            "src": "/api/(.*)",
-            "dest": "api/main.py"
+            "src": "/sms-api/(.*)",
+            "dest": "sms-api/main.py"
         }
     ]
 }
