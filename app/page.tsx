@@ -176,8 +176,8 @@ console.log(response.messageId);`}
               </CardHeader>
               <CardContent>
                 <p className="text-gray-500">
-                  "SMSimplAPI has transformed how we communicate with our customers. The API is incredibly easy to use and
-                  the delivery rates are impressive."
+                &quot;SMSimplAPI has transformed how we communicate with our customers. The API is incredibly easy to use and
+                  the delivery rates are impressive.&quot;
                 </p>
               </CardContent>
               <CardFooter>
@@ -218,8 +218,8 @@ console.log(response.messageId);`}
               </CardHeader>
               <CardContent>
                 <p className="text-gray-500">
-                  "We switched to SMSimplAPI after trying several other providers. The documentation is excellent and the
-                  support team is responsive and helpful."
+                &quot;We switched to SMSimplAPI after trying several other providers. The documentation is excellent and the
+                  support team is responsive and helpful.&quot;
                 </p>
               </CardContent>
               <CardFooter>
@@ -260,8 +260,8 @@ console.log(response.messageId);`}
               </CardHeader>
               <CardContent>
                 <p className="text-gray-500">
-                  "As a startup, we needed an SMS solution that could scale with us. SMSimplAPI has been the perfect
-                  partner, growing alongside our business."
+                &quot;As a startup, we needed an SMS solution that could scale with us. SMSimplAPI has been the perfect
+                  partner, growing alongside our business.&quot;
                 </p>
               </CardContent>
               <CardFooter>
@@ -295,7 +295,7 @@ console.log(response.messageId);`}
             <div className="space-y-2">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Simple, Transparent Pricing</h2>
               <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                Choose the plan that's right for your business. No hidden fees or long-term contracts.
+                Choose the plan that&apos;s right for your business. No hidden fees or long-term contracts.
               </p>
             </div>
           </div>
