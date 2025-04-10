@@ -46,7 +46,7 @@ export default async function DashboardPage({
   const usedCredits = await getUsedCredits(user_id)
   const remainingCredits = await getCredits(user_id)
   const totalCredits = usedCredits + remainingCredits
-  const usagePercentage = Math.round((usedCredits / totalCredits) * 100)
+  const usagePercentage = totalCredits === 0 ? 100 : Math.round((usedCredits / totalCredits) * 100)
 
   return (
     <div className="flex flex-col">
