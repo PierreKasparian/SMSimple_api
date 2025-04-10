@@ -92,13 +92,13 @@ def authenticate_user(provided_key: str):
             # Skip invalid hashes and continue checking other records
             continue
 
-    return None  # No match found
+    return None,None  # No match found
 
 
 class Item(BaseModel):
-    to: str
-    message: str
-    apiKey: str
+    to: str | None = None
+    message: str | None = None
+    apiKey: str | None = None
 
 
 @app.post("/sms-api/sendsms/")
