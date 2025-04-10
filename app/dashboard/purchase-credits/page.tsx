@@ -13,7 +13,7 @@ const page = async () => {
     redirect("/login");
   }
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col">
     <NavBar />
 
     <main className="flex-1">

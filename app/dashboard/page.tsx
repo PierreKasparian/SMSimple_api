@@ -1,6 +1,5 @@
 "use server"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { WebhookForm } from "@/components/dashboard/WebhookForm"
+
 import { NavBar } from "@/components/dashboard/Navbar"
 import ApiKeySection from "@/components/dashboard/ApiKeySection"
 import { redirect } from "next/navigation"
@@ -9,6 +8,7 @@ import { randomBytes } from "crypto"
 import bcrypt from 'bcrypt';
 import CreditSection from "@/components/dashboard/CreditSection"
 import { getUsedCredits, getCredits } from "@/utils/supabase/queries"
+import WebhookSection from "@/components/dashboard/WebhookSection"
 const API_KEY_BYTE_LENGTH = 32
 const SALT_ROUNDS = 12
 
@@ -49,7 +49,7 @@ export default async function DashboardPage({
   const usagePercentage = Math.round((usedCredits / totalCredits) * 100)
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col">
       <NavBar />
       
       <main className="flex-1  px-4 py-8 md:px-6 md:py-12">
@@ -63,21 +63,7 @@ export default async function DashboardPage({
 
           <CreditSection usedCredits={usedCredits} remainingCredits={remainingCredits} usagePercentage={usagePercentage} />
 
-          {/* Webhook Section */}
-          <section className="space-y-4">
-            <h2 className="text-xl font-semibold">Webhook Settings</h2>
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Delivery Webhook</CardTitle>
-                <CardDescription>
-                Responses from the people you&apos;ve contacted will be sent to this URL.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <WebhookForm />
-              </CardContent>
-            </Card>
-          </section>
+          {/* <WebhookSection /> */}
         </div>
       </main>
     </div>

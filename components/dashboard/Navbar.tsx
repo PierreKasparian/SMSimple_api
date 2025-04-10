@@ -18,12 +18,12 @@ export function NavBar() {
           <Link href="/dashboard" className="text-sm font-medium hover:text-primary transition-colors">
             Dashboard
           </Link>
-          <Link href="/billing-history" className="text-sm font-medium hover:text-primary transition-colors">
+          {/* <Link href="/billing-history" className="text-sm font-medium hover:text-primary transition-colors">
             Billing History
           </Link>
           <Link href="/sms-history" className="text-sm font-medium hover:text-primary transition-colors">
             SMS History
-          </Link>
+          </Link> */}
           <Link href="/dashboard/purchase-credits" className="text-sm font-medium hover:text-primary transition-colors">
             Purchase Credits
           </Link>
