@@ -8,7 +8,7 @@ const Footer = () => {
       <div className="flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-10">
         <Link href="/" className="flex items-center gap-2 font-bold text-xl">
           <MessageSquare className="h-6 w-6" />
-          <span>SMSimplAPI</span>
+          <span>SMSimple-API</span>
         </Link>
         <nav className="grid grid-cols-2 gap-8 sm:grid-cols-3 md:flex md:gap-10">
           <div className="space-y-3">
@@ -35,12 +35,12 @@ const Footer = () => {
             <h3 className="text-sm font-medium">Legal</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="#" className="text-sm hover:underline underline-offset-4">
+                <Link href="/legal/privacy" className="text-sm hover:underline underline-offset-4">
                   Privacy
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-sm hover:underline underline-offset-4">
+                <Link href="/legal/terms" className="text-sm hover:underline underline-offset-4">
                   Terms
                 </Link>
               </li>
@@ -49,7 +49,7 @@ const Footer = () => {
         </nav>
       </div>
       <div className="flex flex-col md:flex-row justify-between items-center gap-4 border-t pt-8">
-        <p className="text-sm text-gray-500">© {new Date().getFullYear()} SMSimplAPI. All rights reserved.</p>
+        <p className="text-sm text-gray-500">© {new Date().getFullYear()} SMSimple-API. All rights reserved.</p>
       </div>
     </div>
   </footer>

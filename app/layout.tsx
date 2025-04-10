@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SMSimplAPI",
-  description: "SMSimplAPI is a simple API for sending SMS messages",
+  title: "SMSimple-API",
+  description: "SMSimple-API is a simple API for sending SMS messages",
 };
 
 export default function RootLayout({

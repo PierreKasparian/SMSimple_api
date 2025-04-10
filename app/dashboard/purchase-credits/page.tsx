@@ -18,12 +18,12 @@ const page = async () => {
 
     <main className="flex-1">
       <section className="w-full py-12 md:py-24">
-        <div className="container px-4 md:px-6">
+        <div className="px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="space-y-2">
-              <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Achetez des Crédits SMS</h1>
+              <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Purchase SMS Credits</h1>
               <p className="max-w-[700px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                Choisissez le forfait qui correspond à vos besoins d&apos;envoi de SMS
+                Choose the plan that best suits your SMS sending needs
               </p>
             </div>
           </div>
@@ -35,31 +35,31 @@ const page = async () => {
             >
               <CardHeader>
                 <Zap className="h-10 w-10 text-primary mb-2" />
-                <CardTitle className="text-xl">Débutant</CardTitle>
-                <CardDescription>Idéal pour tester notre service</CardDescription>
+                <CardTitle className="text-xl">Starter</CardTitle>
+                <CardDescription>Perfect for testing our service</CardDescription>
                 <div className="mt-4">
                   <span className="text-4xl font-bold">2€</span>
                 </div>
               </CardHeader>
               <CardContent className="flex-1">
-                <div className="text-2xl font-bold text-center mb-4">50 crédits</div>
+                <div className="text-2xl font-bold text-center mb-4">50 credits</div>
                 <ul className="space-y-2 text-sm">
                   <li className="flex items-center">
                     <Check className="h-4 w-4 mr-2 text-primary" />
-                    <span>1 crédit = 1 SMS</span>
+                    <span>1 credit = 1 SMS</span>
                   </li>
                   <li className="flex items-center">
                     <Check className="h-4 w-4 mr-2 text-primary" />
-                    <span>Validité: 3 mois</span>
+                    <span>Validity: forever</span>
                   </li>
                   <li className="flex items-center">
                     <Check className="h-4 w-4 mr-2 text-primary" />
-                    <span>Support par email</span>
+                    <span>Webhooks</span>
                   </li>
                 </ul>
               </CardContent>
               <CardFooter>
-               <BuyButton user_id={user.data.user?.id}/>
+               <BuyButton user_id={user.data.user?.id} credits={2}/>
               </CardFooter>
             </Card>
 
@@ -67,35 +67,35 @@ const page = async () => {
             <Card className={`flex flex-col`}>
               <CardHeader>
                 <Sparkles className="h-10 w-10 text-primary mb-2" />
-                <CardTitle className="text-xl">Professionnel</CardTitle>
-                <CardDescription>Pour les entreprises en croissance</CardDescription>
+                <CardTitle className="text-xl">Professional</CardTitle>
+                <CardDescription>For growing businesses</CardDescription>
                 <div className="mt-4">
                   <span className="text-4xl font-bold">20€</span>
                 </div>
               </CardHeader>
               <CardContent className="flex-1">
-                <div className="text-2xl font-bold text-center mb-4">1000 crédits</div>
+                <div className="text-2xl font-bold text-center mb-4">1000 credits</div>
                 <ul className="space-y-2 text-sm">
                   <li className="flex items-center">
                     <Check className="h-4 w-4 mr-2 text-primary" />
-                    <span>1 crédit = 1 SMS</span>
+                    <span>1 credit = 1 SMS</span>
                   </li>
                   <li className="flex items-center">
                     <Check className="h-4 w-4 mr-2 text-primary" />
-                    <span>Validité: 6 mois</span>
+                    <span>Validity: forever</span>
                   </li>
                   <li className="flex items-center">
                     <Check className="h-4 w-4 mr-2 text-primary" />
-                    <span>Support prioritaire</span>
+                    <span>Email support</span>
                   </li>
                   <li className="flex items-center">
                     <Check className="h-4 w-4 mr-2 text-primary" />
-                    <span>Rapports de livraison</span>
+                    <span>Webhooks</span>
                   </li>
                 </ul>
               </CardContent>
               <CardFooter>
-                <BuyButton user_id={user.data.user?.id}/>
+                <BuyButton user_id={user.data.user?.id} credits={20}/>
               </CardFooter>
             </Card>
 
@@ -105,39 +105,35 @@ const page = async () => {
             >
               <CardHeader>
                 <Zap className="h-10 w-10 text-primary mb-2" />
-                <CardTitle className="text-xl">Entreprise</CardTitle>
-                <CardDescription>Pour les communications à grande échelle</CardDescription>
+                <CardTitle className="text-xl">Enterprise</CardTitle>
+                <CardDescription>For large-scale communications</CardDescription>
                 <div className="mt-4">
                   <span className="text-4xl font-bold">60€</span>
                 </div>
               </CardHeader>
               <CardContent className="flex-1">
-                <div className="text-2xl font-bold text-center mb-4">5000 crédits</div>
+                <div className="text-2xl font-bold text-center mb-4">5000 credits</div>
                 <ul className="space-y-2 text-sm">
                   <li className="flex items-center">
                     <Check className="h-4 w-4 mr-2 text-primary" />
-                    <span>1 crédit = 1 SMS</span>
+                    <span>1 credit = 1 SMS</span>
                   </li>
                   <li className="flex items-center">
                     <Check className="h-4 w-4 mr-2 text-primary" />
-                    <span>Validité: 12 mois</span>
+                    <span>Validity: forever</span>
                   </li>
                   <li className="flex items-center">
                     <Check className="h-4 w-4 mr-2 text-primary" />
-                    <span>Support dédié</span>
+                    <span>Advanced email support</span>
                   </li>
                   <li className="flex items-center">
                     <Check className="h-4 w-4 mr-2 text-primary" />
-                    <span>Rapports avancés</span>
-                  </li>
-                  <li className="flex items-center">
-                    <Check className="h-4 w-4 mr-2 text-primary" />
-                    <span>API prioritaire</span>
+                    <span>Webhooks</span>
                   </li>
                 </ul>
               </CardContent>
               <CardFooter>
-                <BuyButton user_id={user.data.user?.id}/>
+                <BuyButton user_id={user.data.user?.id} credits={60}/>
               </CardFooter>
             </Card>
           </div>
@@ -146,9 +142,9 @@ const page = async () => {
 
           <div className="text-center mt-12">
             <p className="text-sm text-gray-500">
-              Besoin d&apos;un forfait personnalisé ?{" "}
+              Need a custom plan?{" "}
               <Link href="mailto:ia.school.app@gmail.com" className="text-primary font-medium hover:underline">
-                Contactez notre équipe commerciale
+                Contact our sales team
               </Link>
             </p>
           </div>

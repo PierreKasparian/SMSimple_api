@@ -10,7 +10,7 @@ export function NavBar() {
         <div className="flex items-center gap-2">
           <Link href="/" className="flex items-center gap-2 font-bold text-xl">
             <MessageSquare className="h-6 w-6" />
-            <span>SMSimplAPI</span>
+            <span>SMSimple-API</span>
           </Link>
         </div>
 

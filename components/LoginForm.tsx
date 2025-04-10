@@ -133,11 +133,11 @@ export default function LoginForm() {
           </Card>
           <p className="mt-4 text-center text-sm text-gray-500">
             By continuing, you agree to our{" "}
-            <Link href="/terms" className="text-primary hover:underline">
+            <Link href="/legal/terms" className="text-primary hover:underline">
               Terms of Service
             </Link>{" "}
             and{" "}
-            <Link href="/privacy" className="text-primary hover:underline">
+            <Link href="/legal/privacy" className="text-primary hover:underline">
               Privacy Policy
             </Link>
             .

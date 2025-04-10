@@ -8,17 +8,25 @@ const SITE_URL = process.env.SITE_URL!;
 export async function POST(request: Request) {
   const body = await request.json();
   const user_id = body.user_id;
+  const credits = body.credits;
   try {
+    let customerId: Stripe.Customer | string = '';
+    
+      const newCustomer = await stripe.customers.create();
+      customerId = newCustomer.id;
     const session = await stripe.checkout.sessions.create({
-      mode: "subscription",
+      customer: customerId,
+      mode: "payment",
       payment_method_types: ["card"],
       line_items: [
         {
-          price: process.env.STRIPE_PRICE_ID,
+          price: credits === 60 ? process.env.STRIPE_PRICE_ID_60 : credits === 20 ? process.env.STRIPE_PRICE_ID_20 : process.env.STRIPE_PRICE_ID_2,
+          quantity: 1,
         },
       ],
       metadata: {
         user_id: user_id,
+        credits: credits,
       },
       success_url: `${SITE_URL}dashboard`,
       cancel_url: `${SITE_URL}error`,

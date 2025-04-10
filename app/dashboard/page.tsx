@@ -2,13 +2,13 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { WebhookForm } from "@/components/dashboard/WebhookForm"
 import { NavBar } from "@/components/dashboard/Navbar"
-import { Button } from "@/components/ui/button"
 import ApiKeySection from "@/components/dashboard/ApiKeySection"
 import { redirect } from "next/navigation"
 import { createClient } from "@/utils/supabase/server"
 import { randomBytes } from "crypto"
 import bcrypt from 'bcrypt';
-
+import CreditSection from "@/components/dashboard/CreditSection"
+import { getUsedCredits, getCredits } from "@/utils/supabase/queries"
 const API_KEY_BYTE_LENGTH = 32
 const SALT_ROUNDS = 12
 
@@ -40,9 +40,11 @@ export default async function DashboardPage({
       redirect('/error')
     }
   }
-  // Hardcoded credit information
-  const usedCredits = 3450
-  const remainingCredits = 6550
+  const supabase = await createClient()
+  const { data: user_data } = await supabase.auth.getUser()
+  const user_id = user_data.user!.id
+  const usedCredits = await getUsedCredits(user_id)
+  const remainingCredits = await getCredits(user_id)
   const totalCredits = usedCredits + remainingCredits
   const usagePercentage = Math.round((usedCredits / totalCredits) * 100)
 
@@ -59,50 +61,7 @@ export default async function DashboardPage({
 
           <ApiKeySection apiKey={api_key} />
 
-          {/* Credits Section */}
-          <section className="space-y-4">
-            <h2 className="text-xl font-semibold">SMS Credits</h2>
-            <div className="grid gap-4 md:grid-cols-2">
-              <Card>
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-lg">Used Credits</CardTitle>
-                  <CardDescription>Current billing period</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-3xl font-bold">{usedCredits.toLocaleString()}</span>
-                    <span className="text-gray-500">SMS</span>
-                  </div>
-                  <div className="mt-4 h-2 w-full bg-gray-100 rounded-full overflow-hidden">
-                    <div 
-                      className="h-full bg-primary rounded-full" 
-                      style={{ width: `${usagePercentage}%` }}
-                    />
-                  </div>
-                  <p className="mt-2 text-sm text-gray-500">{usagePercentage}% of your plan used</p>
-                </CardContent>
-              </Card>
-              
-              <Card>
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-lg">Remaining Credits</CardTitle>
-                  <CardDescription>Current billing period</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-3xl font-bold">{remainingCredits.toLocaleString()}</span>
-                    <span className="text-gray-500">SMS</span>
-                  </div>
-                  <div className="mt-4 flex items-center justify-between">
-                    <span className="text-sm text-gray-500">Plan renews on May 1, 2025</span>
-                    <Button variant="outline" size="sm" asChild>
-                      <a href="/purchase-credits">Buy More</a>
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </section>
+          <CreditSection usedCredits={usedCredits} remainingCredits={remainingCredits} usagePercentage={usagePercentage} />
 
           {/* Webhook Section */}
           <section className="space-y-4">

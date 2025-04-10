@@ -132,7 +132,7 @@ const response = await fetch('https://smsimple-api.vercel.app/sms-api/sendsms/',
   },
   body: JSON.stringify({
     to: '+1234567890',
-    message: 'Hello from SMSimplAPI!',
+    message: 'Hello from SMSimple-API!',
     apiKey: 'YOUR_API_KEY'
   })
 });
@@ -177,7 +177,7 @@ console.log(response);`}
               </CardHeader>
               <CardContent>
                 <p className="text-gray-500">
-                  &quot;SMSimplAPI has transformed how we communicate with our
+                  &quot;SMSimple-API has transformed how we communicate with our
                   customers. The API is incredibly easy to use and the delivery
                   rates are impressive.&quot;
                 </p>
@@ -221,7 +221,7 @@ console.log(response);`}
               </CardHeader>
               <CardContent>
                 <p className="text-gray-500">
-                  &quot;We switched to SMSimplAPI after trying several other
+                  &quot;We switched to SMSimple-API after trying several other
                   providers. The documentation is excellent and the support team
                   is responsive and helpful.&quot;
                 </p>
@@ -264,7 +264,7 @@ console.log(response);`}
               <CardContent>
                 <p className="text-gray-500">
                   &quot;As a startup, we needed an SMS solution that could scale
-                  with us. SMSimplAPI has been the perfect partner, growing
+                  with us. SMSimple-API has been the perfect partner, growing
                   alongside our business.&quot;
                 </p>
               </CardContent>
@@ -590,7 +590,7 @@ console.log(response);`}
                 Ready to get started?
               </h2>
               <p className="mx-auto max-w-[600px] text-primary-foreground/80 md:text-xl/relaxed">
-                Join thousands of developers who trust SMSimplAPI for their
+                Join thousands of developers who trust SMSimple-API for their
                 messaging needs
               </p>
             </div>
