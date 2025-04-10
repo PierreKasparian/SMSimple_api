@@ -567,11 +567,12 @@ console.log(response);`}
               </CardFooter>
             </Card>
           </div>
+          
           <div className="text-center">
             <p className="text-sm text-gray-500">
               Need a custom plan?{" "}
               <Link
-                href="mailto:ia.school.app@gmail.com"
+                href="mailto:ia.school.app@gmail.com"                
                 className="text-primary font-medium hover:underline"
               >
                 Contact our sales team
