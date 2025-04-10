@@ -8,7 +8,7 @@ import { randomBytes } from "crypto"
 import bcrypt from 'bcrypt';
 import CreditSection from "@/components/dashboard/CreditSection"
 import { getUsedCredits, getCredits } from "@/utils/supabase/queries"
-import WebhookSection from "@/components/dashboard/WebhookSection"
+// import WebhookSection from "@/components/dashboard/WebhookSection"
 const API_KEY_BYTE_LENGTH = 32
 const SALT_ROUNDS = 12
 

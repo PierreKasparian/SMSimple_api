@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from dotenv import load_dotenv
@@ -6,9 +6,8 @@ import os
 from twilio.rest import Client
 import traceback
 import stripe
-import secrets
-import hashlib
 import os
+import bcrypt
 from supabase import create_client as create_supabase_client, Client as SupabaseClient
 load_dotenv()
 
@@ -16,10 +15,9 @@ url: str = os.environ.get("NEXT_PUBLIC_SUPABASE_URL")
 
 key: str = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
 supabase: SupabaseClient = create_supabase_client(url, key)
-# Load environment variables
+
 # Stripe configuration
 stripe.api_key = os.getenv('STRIPE_SECRET_KEY')
-webhook_secret = os.getenv('STRIPE_WEBHOOK_SECRET')
 SITE_URL = os.getenv('SITE_URL')
 # Twilio configuration
 account_sid = os.getenv('TWILIO_SID')
@@ -52,7 +50,7 @@ def send_SMS(client, message, to):
 
     message = client.messages.create(
         body=message,
-        from_="",  # "+15865196045",
+        from_="+15865196045",
         to=to,
     )
 
@@ -79,6 +77,24 @@ def buy_phone_numbr(client):
 # Définir un modèle de données pour la requête POST
 
 
+def authenticate_user(provided_key: str):
+    # 1. Fetch ALL hashed API keys from DB (or batch if too many)
+    rows = supabase.table("API_KEY").select(
+        "user_id, api_key, credits"
+    ).execute()
+    # 2. Compare against each record securely
+    for row in rows.data:
+        try:
+            if bcrypt.checkpw(provided_key.encode(), row['api_key'].encode()):
+                # Return authenticated user
+                return row['user_id'], row['credits']
+        except ValueError:
+            # Skip invalid hashes and continue checking other records
+            continue
+
+    return None  # No match found
+
+
 class Item(BaseModel):
     to: str
     message: str
@@ -89,144 +105,103 @@ class Item(BaseModel):
 async def sendsms(item: Item):
     api_key = item.apiKey
     if not api_key:
-        return {"error": "Missing API key"}, 400
-
-    hashed_api_key = hash_api_key(api_key)
-    response = supabase.table("API_KEY").select(
-        "*").eq("api_key", hashed_api_key).execute()
-
-    if not response.data:
-        return {"error": "Unvalid API key"}, 403
-    customer_id = response.data[0]['customer_id']
-    item_id = response.data[0]['item_id']
-    # customer = customers.get(customer_id)
-
-    if not customer_id or not item_id:
-        return {"error": "Unauthorized"}, 403
-
-    # Record usage with Stripe Billing
-    try:
-        record = stripe.SubscriptionItem.create_usage_record(
-            item_id,
-            quantity=1,
-            timestamp='now',
-            action='increment'
-        )
-    except Exception as e:
-        return {"error": str(e)}, 500
+        raise HTTPException(status_code=400, detail="Missing API key")
     if not item.to or not item.message:
-        return {"response": "Missing required fields"}
+        raise HTTPException(
+            status_code=400, detail="Missing \"to\" or \"message\" required fields")
+
+    user_id, credits = authenticate_user(api_key)
+
+    if not user_id:
+        raise HTTPException(status_code=403, detail="Unvalid API key")
+
+    if credits <= 0:
+        raise HTTPException(status_code=403, detail="Insufficient credits")
+    # Deduct 1 credit
+    supabase.table("API_KEY").update(
+        {"credits": credits - 1}).eq("user_id", user_id).execute()
+
     try:
         ans = send_SMS(client=client, message=item.message, to=item.to)
-        response_data = {
+        response_sms = {
             "body": ans.body,
             "status": ans.status
         }
     except Exception as e:
         print("An error occurred:", e)
         traceback.print_exc()
-        return {"response": "An error occured"}
-    return {"response": response_data}
+        raise HTTPException(
+            status_code=500, detail="An error occured sending the SMS")
+    return {"response": response_sms}
 
 
-@app.get("/sms-api/python")
+@app.get("/sms-api/healthcheck")
 async def healthcheck():
-    print('coucou')
+    print('healthcheck')
     return "API working"
 
 
-# def generate_api_key():
-#     api_key = secrets.token_hex(16)
-#     hashed_api_key = hash_api_key(api_key)
-#     return {"hashed_api_key": hashed_api_key, "api_key": api_key}
-
-
-# def hash_api_key(api_key: str) -> str:
-#     return hashlib.sha256(api_key.encode()).hexdigest()
-
-
-# @app.post("/sms-api/checkout")
-# async def create_checkout_session():
+# @app.post("/sms-api/webhook")
+# async def stripe_webhook(request: Request):
+#     payload = await request.body()
+#     sig_header = request.headers.get('stripe-signature')
+#     print('in the webhook')
 #     try:
-#         session = stripe.checkout.Session.create(
-#             mode='subscription',
-#             payment_method_types=['card'],
-#             line_items=[{
-#                 'price': os.getenv('STRIPE_PRICE_ID'),
-#             }],
-#             success_url=SITE_URL+'dashboard?session_id={CHECKOUT_SESSION_ID}',
-#             cancel_url=SITE_URL+'error',
+#         event = stripe.Webhook.construct_event(
+#             payload, sig_header, webhook_secret
 #         )
-#         return {"sessionId": session.id,
-#                 "paymentUrl": session.url}
+#     except ValueError as e:
+#         return {"error": "Invalid payload"}, 400
+#     except stripe.error.SignatureVerificationError as e:
+#         return {"error": "Invalid signature"}, 400
+
+#     if event['type'] == 'checkout.session.completed':
+#         print(event['data'])
+#         session = event['data']['object']
+#         customer_id = session.customer
+#         subscription_id = session.subscription
+
+#         subscription = stripe.Subscription.retrieve(subscription_id)
+#         print('subscription')
+#         item_id = subscription["items"]["data"][0]['id']
+
+#         # Generate API key
+#         api_key_data = generate_api_key()
+#         print(api_key_data)
+#         # Get user from supabase
+
+#         try:
+#             # PLUTOT FAIRE UN UPDATE ICI pour ajouter item_id et customer_id
+#             url = SITE_URL+"intern_api/"
+#             payload = {
+#                 "customer_id": customer_id,
+#                 "item_id": item_id
+#             }
+
+#             headers = {
+#                 "Content-Type": "application/json",
+#                 "Accept": "application/json"
+#             }
+
+#     # Version avec vérification détaillée
+#             response = requests.post(url, json=payload, headers=headers)
+#             if (response.status_code != 200):
+#                 print("Failed to store API key")
+#                 return {"error": "Failed to store API key"}, 500
+#         except Exception as e:
+#             print(e)
+#             traceback.print_exc()
+#             return {"error": "Failed to store API key"}, 500
+#         print(f"Customer {customer_id} subscribed to plan {subscription_id}")
+#     return {"status": "success"}
+
+
+# @app.get("/sms-api/usage/{customer_id}")
+# async def get_usage(customer_id: str):
+#     try:
+#         invoice = stripe.Invoice.upcoming(
+#             customer=customer_id
+#         )
+#         return invoice
 #     except Exception as e:
-#         return {"error": str(e)}
-
-# import requests
-
-@app.post("/sms-api/webhook")
-async def stripe_webhook(request: Request):
-    payload = await request.body()
-    sig_header = request.headers.get('stripe-signature')
-    print('in the webhook')
-    try:
-        event = stripe.Webhook.construct_event(
-            payload, sig_header, webhook_secret
-        )
-    except ValueError as e:
-        return {"error": "Invalid payload"}, 400
-    except stripe.error.SignatureVerificationError as e:
-        return {"error": "Invalid signature"}, 400
-
-    if event['type'] == 'checkout.session.completed':
-        print(event['data'])
-        session = event['data']['object']
-        customer_id = session.customer
-        subscription_id = session.subscription
-
-        subscription = stripe.Subscription.retrieve(subscription_id)
-        print('subscription')
-        item_id = subscription["items"]["data"][0]['id']
-
-        # Generate API key
-        api_key_data = generate_api_key()
-        print(api_key_data)
-        # Get user from supabase
-
-        try:
-            # PLUTOT FAIRE UN UPDATE ICI pour ajouter item_id et customer_id
-            url = SITE_URL+"intern_api/"
-            payload = {
-                "customer_id": customer_id,
-                "item_id": item_id
-            }
-
-            headers = {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            }
-
-    # Version avec vérification détaillée
-            response = requests.post(url, json=payload, headers=headers)
-            if (response.status_code != 200):
-                print("Failed to store API key")
-                return {"error": "Failed to store API key"}, 500
-        except Exception as e:
-            print(e)
-            traceback.print_exc()
-            return {"error": "Failed to store API key"}, 500
-        print(f"Customer {customer_id} subscribed to plan {subscription_id}")
-    return {"status": "success"}
-
-
-
-
-@app.get("/sms-api/usage/{customer_id}")
-async def get_usage(customer_id: str):
-    try:
-        invoice = stripe.Invoice.upcoming(
-            customer=customer_id
-        )
-        return invoice
-    except Exception as e:
-        return {"error": str(e)}, 500
+#         return {"error": str(e)}, 500

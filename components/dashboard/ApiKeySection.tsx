@@ -11,7 +11,7 @@ const ApiKeySection = ({apiKey}:{apiKey:string|undefined}) => {
     <section className="space-y-4">
         <div className="flex flex-col gap-2">
             <h2 className="text-xl font-semibold">{apiKey ? "Your API Key" : "API Key already shown"}</h2>
-            <h3 className="text-lg">
+            <h3 className="text-lg underline">
                 {apiKey && "You won't be able to see it again"}
             </h3>
         </div>
@@ -24,8 +24,8 @@ const ApiKeySection = ({apiKey}:{apiKey:string|undefined}) => {
           </AlertDescription>
         </div>
         {apiKey && <Button variant="outline" size="sm" className="h-8">
-          <Copy className="h-4 w-4 mr-2" />
-          Copy
+          <Copy className="h-4 w-4 mr-2" onClick={() => navigator.clipboard.writeText(apiKey || '')} />
+          <span onClick={() => navigator.clipboard.writeText(apiKey || '')}>Copy</span>
         </Button>}
       </div>
     </Alert>
