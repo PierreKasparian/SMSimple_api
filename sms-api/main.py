@@ -26,16 +26,12 @@ app = FastAPI()
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins
-    allow_credentials=False,  # Disable credentials when using *
-    allow_methods=["GET", "POST"],  # Only allow necessary methods
-    allow_headers=["*"],     # Alternative API key header
-    expose_headers=[
-        "Content-Length",
-        "X-Request-ID",
-        "X-Response-Time"
-    ],
-    max_age=600  # Cache preflight requests for 10 minutes
+    allow_origins=["*"],  # À remplacer par vos domaines en prod
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "OPTIONS"],  # Explicitement listés
+    allow_headers=["*"],
+    expose_headers=["*"],
+    max_age=600 # Cache preflight requests for 10 minutes
 )
 
 
@@ -93,13 +89,15 @@ class Item(BaseModel):
     message: str | None = None
     apiKey: str | None = None
 
-@app.post("/sms-api/test/")
-async def test():
-    try:
-        return {"status": "success", "message": "Test endpoint working"}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
+@app.options("/sms-api/test/")
+async def options_handler():
+    return {
+        "allowed_methods": ["GET", "POST", "OPTIONS"],
+        "headers": {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer token"
+        }
+    }
 
 @app.post("/sms-api/sendsms/")
 async def sendsms(item: Item):
