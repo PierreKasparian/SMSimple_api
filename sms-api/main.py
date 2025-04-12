@@ -90,7 +90,7 @@ class Item(BaseModel):
     message: str | None = None
     apiKey: str | None = None
 
-@app.options("/sms-api/test/")
+@app.options("/sms-api/test")
 async def options_handler():
     return {
         "allowed_methods": ["GET", "POST", "OPTIONS"],
@@ -100,7 +100,7 @@ async def options_handler():
         }
     }
 
-@app.post("/sms-api/sendsms/")
+@app.post("/sms-api/sendsms")
 async def sendsms(item: Item):
     print('in the sendsms')
     print(item)
