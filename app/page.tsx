@@ -125,18 +125,20 @@ export default async function Home() {
                 <pre className="text-sm text-left overflow-x-auto">
                   <code className="language-javascript">
                     {`// Send a message
-const response = await fetch('https://smsimple-api.vercel.app/sms-api/sendsms/', {
-  method: 'POST',
+const url = "https://smsimple-api.vercel.app/sms-api/sendsms";
+const apiKey = "YOUR_API_KEY"; // Replace with your actual API key
+
+const response = await fetch(url, {
+  method: "POST",
   headers: {
-    'Content-Type': 'application/json',
+    "Authorization": \`Bearer \${apiKey}\`,
+    "Content-Type": "application/json",
   },
   body: JSON.stringify({
-    to: '+1234567890',
-    message: 'Hello from SMSimple-API!',
-    apiKey: 'YOUR_API_KEY'
-  })
-});
-
+    to: "+1234567890", // Replace with recipient number
+    message: "Hello from SMSimple-API!", // Replace with your message
+  }),
+})
 console.log(response);`}
                   </code>
                 </pre>

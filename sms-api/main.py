@@ -105,8 +105,6 @@ async def get_api_key(authorization: str = Header(None)):
 # Update the sendsms route to use the dependency
 @app.post("/sms-api/sendsms")
 async def sendsms(item: Item, api_key: str = Depends(get_api_key)):  # Add dependency here
-    print('in the sendsms')
-    print(item)
     # No need to check for api_key presence here since the dependency handles it
     if not item.to or not item.message:
         raise HTTPException(
@@ -120,13 +118,12 @@ async def sendsms(item: Item, api_key: str = Depends(get_api_key)):  # Add depen
     if credits <= 0:
         raise HTTPException(status_code=403, detail="Insufficient credits")
     
-    # Rest of the code remains the same...
     try:
         supabase.table("API_KEY").update(
             {"credits": credits - 1}).eq("user_id", user_id).execute()
     except Exception as e:
         print("Error updating credits:", e)
-        raise HTTPException(status_code=500, detail="Failed to update credits")
+        raise HTTPException(status_code=500, detail="Failed to update credits. SMS not sent")
     try:
         ans = send_SMS(client=client, message=item.message, to=item.to)
         response_sms = {
