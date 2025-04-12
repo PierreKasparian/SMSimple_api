@@ -12,19 +12,7 @@
   "routes": [
     {
       "src": "/sms-api/(.*)",
-      "dest": "/sms-api?path=$1",
-      "methods": ["GET", "POST", "OPTIONS"]
-    },
-    {
-      "src": "/sms-api",
-      "dest": "/sms-api/main.py",
-      "methods": ["GET", "POST", "OPTIONS"]
+      "dest": "sms-api/main.py"
     }
-  ],
-  "overrides": {
-    "sms-api/test": {
-      "path": "/sms-api",
-      "methods": ["POST"]
-    }
-  }
+  ]
 }
