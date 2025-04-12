@@ -56,7 +56,7 @@ export default async function DashboardPage({
         <div className="flex flex-col gap-8">
           <div>
             <h1 className="text-3xl font-bold tracking-tight mb-2">Dashboard</h1>
-            <p className="text-gray-500">Manage your API keys, credits, and webhook settings.</p>
+            <p className="text-gray-500">Manage your API keys and credits.</p>
           </div>
 
           <ApiKeySection apiKey={api_key} />

@@ -73,7 +73,6 @@ def authenticate_user(provided_key: str):
     rows = supabase.table("API_KEY").select(
         "user_id, api_key, credits,used_credits"
     ).execute()
-    print(rows)
     # 2. Compare against each record securely
     for row in rows.data:
         try:
