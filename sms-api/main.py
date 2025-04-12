@@ -103,6 +103,8 @@ class Item(BaseModel):
 
 @app.post("/sms-api/sendsms/")
 async def sendsms(item: Item):
+    print('in the sendsms')
+    print(item)
     api_key = item.apiKey
     if not api_key:
         raise HTTPException(status_code=400, detail="Missing API key")

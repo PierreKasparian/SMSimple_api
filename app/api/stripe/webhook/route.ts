@@ -10,7 +10,6 @@ export async function POST(request: Request) {
     // Read the raw body once
     const bodyBuffer = await request.arrayBuffer();
     const body = Buffer.from(bodyBuffer).toString('utf-8');
-    console.log(request.headers)
     // Get signature from headers
     const signature = request.headers.get('stripe-signature');
 
