@@ -122,10 +122,13 @@ async def sendsms(item: Item):
 
     if credits <= 0:
         raise HTTPException(status_code=403, detail="Insufficient credits")
-    # Deduct 1 credit
-    supabase.table("API_KEY").update(
-        {"credits": credits - 1}).eq("user_id", user_id).execute()
 
+        # Deduct 1 credit
+    error = supabase.table("API_KEY").update(
+        {"credits": credits - 1}).eq("user_id", user_id).execute()
+    print(error)
+    if error:
+        raise HTTPException(status_code=500, detail="An error occured updating the credits")
     try:
         ans = send_SMS(client=client, message=item.message, to=item.to)
         response_sms = {
@@ -135,8 +138,16 @@ async def sendsms(item: Item):
     except Exception as e:
         print("An error occurred:", e)
         traceback.print_exc()
+        # refund credit
+        error = supabase.table("API_KEY").update(
+            {"credits": credits + 1}).eq("user_id", user_id).execute()
+        if error:
+            print("An error occured refunding the credits : ", error)
         raise HTTPException(
             status_code=500, detail="An error occured sending the SMS")
+
+
+
     return {"response": response_sms}
 
 
