@@ -4,3 +4,4 @@ twilio
 dotenv
 stripe
 supabase
+bcrypt
