@@ -5,7 +5,6 @@ from dotenv import load_dotenv
 import os
 from twilio.rest import Client
 import traceback
-import stripe
 import os
 import bcrypt
 from supabase import create_client as create_supabase_client, Client as SupabaseClient
@@ -16,9 +15,6 @@ url: str = os.environ.get("NEXT_PUBLIC_SUPABASE_URL")
 key: str = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
 supabase: SupabaseClient = create_supabase_client(url, key)
 
-# Stripe configuration
-stripe.api_key = os.getenv('STRIPE_SECRET_KEY')
-SITE_URL = os.getenv('SITE_URL')
 # Twilio configuration
 account_sid = os.getenv('TWILIO_SID')
 auth_token = os.getenv('TWILIO_AUTH_TOK')
@@ -30,19 +26,12 @@ app = FastAPI()
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins
-    allow_credentials=False,  # Disable credentials when using *
-    allow_methods=["GET", "POST"],  # Only allow necessary methods
-    allow_headers=[
-        "Content-Type",
-        "Authorization",  # For API key
-        "X-API-Key"       # Alternative API key header
-    ],
-    expose_headers=[
-        "X-Request-ID",
-        "X-API-Version"
-    ],
-    max_age=600  # Cache preflight requests for 10 minutes
+    allow_origins=["*"],  # À remplacer par vos domaines en prod
+    allow_credentials=False,
+    allow_methods=["GET", "POST", "OPTIONS"],  # Explicitement listés
+    allow_headers=["*"],
+    expose_headers=["*"],
+    max_age=600 # Cache preflight requests for 10 minutes
 )
 
 
@@ -82,6 +71,7 @@ def authenticate_user(provided_key: str):
     rows = supabase.table("API_KEY").select(
         "user_id, api_key, credits"
     ).execute()
+    print(rows)
     # 2. Compare against each record securely
     for row in rows.data:
         try:
@@ -100,9 +90,20 @@ class Item(BaseModel):
     message: str | None = None
     apiKey: str | None = None
 
+@app.options("/sms-api/test/")
+async def options_handler():
+    return {
+        "allowed_methods": ["GET", "POST", "OPTIONS"],
+        "headers": {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer token"
+        }
+    }
 
 @app.post("/sms-api/sendsms/")
 async def sendsms(item: Item):
+    print('in the sendsms')
+    print(item)
     api_key = item.apiKey
     if not api_key:
         raise HTTPException(status_code=400, detail="Missing API key")
@@ -117,10 +118,13 @@ async def sendsms(item: Item):
 
     if credits <= 0:
         raise HTTPException(status_code=403, detail="Insufficient credits")
-    # Deduct 1 credit
-    supabase.table("API_KEY").update(
-        {"credits": credits - 1}).eq("user_id", user_id).execute()
-
+        # Deduct 1 credit
+    try:
+        supabase.table("API_KEY").update(
+            {"credits": credits - 1}).eq("user_id", user_id).execute()
+    except Exception as e:
+        print("Error updating credits:", e)
+        raise HTTPException(status_code=500, detail="Failed to update credits")
     try:
         ans = send_SMS(client=client, message=item.message, to=item.to)
         response_sms = {
@@ -130,9 +134,16 @@ async def sendsms(item: Item):
     except Exception as e:
         print("An error occurred:", e)
         traceback.print_exc()
+        # refund credit
+        try:
+            supabase.table("API_KEY").update(
+                {"credits": credits + 1}).eq("user_id", user_id).execute()
+        except Exception as e:
+            print("An error occured refunding the credits : ", e)
         raise HTTPException(
             status_code=500, detail="An error occured sending the SMS")
-    return {"response": response_sms}
+
+    return {"response":response_sms}
 
 
 @app.get("/sms-api/healthcheck")
