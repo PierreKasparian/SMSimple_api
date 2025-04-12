@@ -8,6 +8,8 @@ import traceback
 import os
 import bcrypt
 from supabase import create_client as create_supabase_client, Client as SupabaseClient
+from fastapi import FastAPI, HTTPException, Depends, Header  # Added Depends and Header
+
 load_dotenv()
 
 url: str = os.environ.get("NEXT_PUBLIC_SUPABASE_URL")
@@ -85,40 +87,40 @@ def authenticate_user(provided_key: str):
     return None,None  # No match found
 
 
+
+# Remove the apiKey from the Item model
 class Item(BaseModel):
     to: str | None = None
     message: str | None = None
-    apiKey: str | None = None
 
-@app.options("/sms-api/test")
-async def options_handler():
-    return {
-        "allowed_methods": ["GET", "POST", "OPTIONS"],
-        "headers": {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer token"
-        }
-    }
+# Add this new dependency to extract the API key from the Authorization header
+async def get_api_key(authorization: str = Header(None)):
+    if not authorization:
+        raise HTTPException(status_code=401, detail="Missing Authorization header")
+    scheme, _, api_key = authorization.partition(' ')
+    if scheme.lower() != 'bearer':
+        raise HTTPException(status_code=401, detail="Invalid authentication scheme")
+    return api_key
 
+# Update the sendsms route to use the dependency
 @app.post("/sms-api/sendsms")
-async def sendsms(item: Item):
+async def sendsms(item: Item, api_key: str = Depends(get_api_key)):  # Add dependency here
     print('in the sendsms')
     print(item)
-    api_key = item.apiKey
-    if not api_key:
-        raise HTTPException(status_code=400, detail="Missing API key")
+    # No need to check for api_key presence here since the dependency handles it
     if not item.to or not item.message:
         raise HTTPException(
             status_code=400, detail="Missing \"to\" or \"message\" required fields")
 
-    user_id, credits = authenticate_user(api_key)
+    user_id, credits = authenticate_user(api_key)  # Use the api_key from the dependency
 
     if not user_id:
-        raise HTTPException(status_code=403, detail="Unvalid API key")
+        raise HTTPException(status_code=403, detail="Invalid API key")
 
     if credits <= 0:
         raise HTTPException(status_code=403, detail="Insufficient credits")
-        # Deduct 1 credit
+    
+    # Rest of the code remains the same...
     try:
         supabase.table("API_KEY").update(
             {"credits": credits - 1}).eq("user_id", user_id).execute()
@@ -134,7 +136,6 @@ async def sendsms(item: Item):
     except Exception as e:
         print("An error occurred:", e)
         traceback.print_exc()
-        # refund credit
         try:
             supabase.table("API_KEY").update(
                 {"credits": credits + 1}).eq("user_id", user_id).execute()
@@ -144,8 +145,7 @@ async def sendsms(item: Item):
             status_code=500, detail="An error occured sending the SMS")
 
     return {"response":response_sms}
-
-
+    
 @app.get("/sms-api/healthcheck")
 async def healthcheck():
     print('healthcheck')
