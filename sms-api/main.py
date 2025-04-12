@@ -5,7 +5,6 @@ from dotenv import load_dotenv
 import os
 from twilio.rest import Client
 import traceback
-import stripe
 import os
 import bcrypt
 from supabase import create_client as create_supabase_client, Client as SupabaseClient
@@ -16,9 +15,6 @@ url: str = os.environ.get("NEXT_PUBLIC_SUPABASE_URL")
 key: str = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
 supabase: SupabaseClient = create_supabase_client(url, key)
 
-# Stripe configuration
-stripe.api_key = os.getenv('STRIPE_SECRET_KEY')
-SITE_URL = os.getenv('SITE_URL')
 # Twilio configuration
 account_sid = os.getenv('TWILIO_SID')
 auth_token = os.getenv('TWILIO_AUTH_TOK')
@@ -100,6 +96,13 @@ class Item(BaseModel):
     message: str | None = None
     apiKey: str | None = None
 
+@app.post("/sms-api/test/")
+async def test():
+    try:
+        return {"status": "success", "message": "Test endpoint working"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 
 @app.post("/sms-api/sendsms/")
 async def sendsms(item: Item):
@@ -141,69 +144,3 @@ async def sendsms(item: Item):
 async def healthcheck():
     print('healthcheck')
     return "API working"
-
-
-# @app.post("/sms-api/webhook")
-# async def stripe_webhook(request: Request):
-#     payload = await request.body()
-#     sig_header = request.headers.get('stripe-signature')
-#     print('in the webhook')
-#     try:
-#         event = stripe.Webhook.construct_event(
-#             payload, sig_header, webhook_secret
-#         )
-#     except ValueError as e:
-#         return {"error": "Invalid payload"}, 400
-#     except stripe.error.SignatureVerificationError as e:
-#         return {"error": "Invalid signature"}, 400
-
-#     if event['type'] == 'checkout.session.completed':
-#         print(event['data'])
-#         session = event['data']['object']
-#         customer_id = session.customer
-#         subscription_id = session.subscription
-
-#         subscription = stripe.Subscription.retrieve(subscription_id)
-#         print('subscription')
-#         item_id = subscription["items"]["data"][0]['id']
-
-#         # Generate API key
-#         api_key_data = generate_api_key()
-#         print(api_key_data)
-#         # Get user from supabase
-
-#         try:
-#             # PLUTOT FAIRE UN UPDATE ICI pour ajouter item_id et customer_id
-#             url = SITE_URL+"intern_api/"
-#             payload = {
-#                 "customer_id": customer_id,
-#                 "item_id": item_id
-#             }
-
-#             headers = {
-#                 "Content-Type": "application/json",
-#                 "Accept": "application/json"
-#             }
-
-#     # Version avec vérification détaillée
-#             response = requests.post(url, json=payload, headers=headers)
-#             if (response.status_code != 200):
-#                 print("Failed to store API key")
-#                 return {"error": "Failed to store API key"}, 500
-#         except Exception as e:
-#             print(e)
-#             traceback.print_exc()
-#             return {"error": "Failed to store API key"}, 500
-#         print(f"Customer {customer_id} subscribed to plan {subscription_id}")
-#     return {"status": "success"}
-
-
-# @app.get("/sms-api/usage/{customer_id}")
-# async def get_usage(customer_id: str):
-#     try:
-#         invoice = stripe.Invoice.upcoming(
-#             customer=customer_id
-#         )
-#         return invoice
-#     except Exception as e:
-#         return {"error": str(e)}, 500
