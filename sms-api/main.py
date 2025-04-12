@@ -71,7 +71,7 @@ def buy_phone_numbr(client):
 def authenticate_user(provided_key: str):
     # 1. Fetch ALL hashed API keys from DB (or batch if too many)
     rows = supabase.table("API_KEY").select(
-        "user_id, api_key, credits"
+        "user_id, api_key, credits,used_credits"
     ).execute()
     print(rows)
     # 2. Compare against each record securely
@@ -79,7 +79,7 @@ def authenticate_user(provided_key: str):
         try:
             if bcrypt.checkpw(provided_key.encode(), row['api_key'].encode()):
                 # Return authenticated user
-                return row['user_id'], row['credits']
+                return row['user_id'], row['credits'],row['used_credits']
         except ValueError:
             # Skip invalid hashes and continue checking other records
             continue
@@ -110,7 +110,7 @@ async def sendsms(item: Item, api_key: str = Depends(get_api_key)):  # Add depen
         raise HTTPException(
             status_code=400, detail="Missing \"to\" or \"message\" required fields")
 
-    user_id, credits = authenticate_user(api_key)  # Use the api_key from the dependency
+    user_id, credits,used_credits = authenticate_user(api_key)  # Use the api_key from the dependency
 
     if not user_id:
         raise HTTPException(status_code=403, detail="Invalid API key")
@@ -120,7 +120,7 @@ async def sendsms(item: Item, api_key: str = Depends(get_api_key)):  # Add depen
     
     try:
         supabase.table("API_KEY").update(
-            {"credits": credits - 1}).eq("user_id", user_id).execute()
+            {"credits": credits - 1,"used_credits": used_credits + 1}).eq("user_id", user_id).execute()
     except Exception as e:
         print("Error updating credits:", e)
         raise HTTPException(status_code=500, detail="Failed to update credits. SMS not sent")
@@ -135,7 +135,7 @@ async def sendsms(item: Item, api_key: str = Depends(get_api_key)):  # Add depen
         traceback.print_exc()
         try:
             supabase.table("API_KEY").update(
-                {"credits": credits + 1}).eq("user_id", user_id).execute()
+                {"credits": credits + 1,"used_credits": used_credits - 1}).eq("user_id", user_id).execute()
         except Exception as e:
             print("An error occured refunding the credits : ", e)
         raise HTTPException(
