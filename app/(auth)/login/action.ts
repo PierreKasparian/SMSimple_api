@@ -30,7 +30,7 @@ export async function signup(email:string,password:string) {
     password: password,
   }
   // Check if user already exists
-  const { data: { users }, error: userError } = await supabase
+  const { error: userError } = await supabase
   .from('users')
   .select('*')
   .eq('email', email);
