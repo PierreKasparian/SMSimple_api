@@ -1,8 +1,10 @@
+import Navbar from '@/components/Navbar'
 import React from 'react'
 
 const page = () => {
   return (
     <div className="bg-gray-50 text-gray-800 font-sans">
+        <Navbar />
     <div className="container mx-auto px-4 py-12 max-w-3xl">
         <header className="mb-12">
             <h1 className="text-3xl font-bold text-gray-900 mb-2">Privacy Policy</h1>

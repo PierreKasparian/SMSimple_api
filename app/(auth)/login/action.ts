@@ -29,6 +29,17 @@ export async function signup(email:string,password:string) {
     email: email,
     password: password,
   }
+  // Check if user already exists
+  const { data: { users }, error: userError } = await supabase
+  .from('users')
+  .select('*')
+  .eq('email', email);
+
+  if (userError) {
+    console.log('error in action')
+    console.log(userError)
+    redirect('/error')
+  }
 
   const { error } = await supabase.auth.signUp(data)
 

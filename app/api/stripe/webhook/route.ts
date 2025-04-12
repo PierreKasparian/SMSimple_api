@@ -9,8 +9,11 @@ const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
 export async function POST(request: Request) {
   try {
     // Read the raw body once
-    const body = await request.text();
-    const signature = (await headers()).get("stripe-signature");
+    const bodyBuffer = await request.arrayBuffer();
+    const body = Buffer.from(bodyBuffer).toString('utf-8');
+    
+    // Get signature from headers
+    const signature = request.headers.get('stripe-signature');
 
     if (!signature) {
       return NextResponse.json({ error: "Missing signature" }, { status: 400 });

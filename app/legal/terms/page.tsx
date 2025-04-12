@@ -1,8 +1,10 @@
+import Navbar from '@/components/Navbar'
 import React from 'react'
 
 const page = () => {
   return (
     <div className="bg-gray-50 text-gray-800 font-sans">
+        <Navbar />
     <div className="container mx-auto px-4 py-12 max-w-3xl">
         <header className="mb-12">
             <h1 className="text-3xl font-bold text-gray-900 mb-2">Terms of Service</h1>
@@ -48,7 +50,7 @@ const page = () => {
                 <p>You <strong>must not</strong> use SMSimple-API for:</p>
                 <ul className="list-disc pl-5 mb-4">
                     <li>Illegal, fraudulent, or harmful activities</li>
-                    <li>Spam, phishing, or unsolicited messages (comply with <a href="https://www.twilio.com/docs/glossary/what-is-a2p-10dlc" className="text-blue-600 hover:underline">Twilio&apos;s A2P 10DLC</a> and carrier rules)</li>
+                    <li>Spam, phishing, or unsolicited messages (comply with <a href="https://help.twilio.com/articles/1260800720410-What-is-A2P-10DLC" className="text-blue-600 hover:underline">Twilio&apos;s A2P 10DLC</a> and carrier rules)</li>
                     <li>Harassment, threats, or violating privacy rights</li>
                     <li>Reverse-engineering or disrupting our service</li>
                 </ul>

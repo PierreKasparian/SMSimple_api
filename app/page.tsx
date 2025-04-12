@@ -170,7 +170,7 @@ console.log(response);`}
                     </AvatarFallback>
                   </Avatar>
                   <div>
-                    <CardTitle className="text-lg">Sarah Johnson</CardTitle>
+                    <CardTitle className="text-lg">Sarah</CardTitle>
                     <CardDescription>CTO at Adonis</CardDescription>
                   </div>
                 </div>
@@ -212,7 +212,7 @@ console.log(response);`}
                     </AvatarFallback>
                   </Avatar>
                   <div>
-                    <CardTitle className="text-lg">David Chen</CardTitle>
+                    <CardTitle className="text-lg">David</CardTitle>
                     <CardDescription>
                       Lead Developer at JuniorAI
                     </CardDescription>
@@ -256,7 +256,7 @@ console.log(response);`}
                     </AvatarFallback>
                   </Avatar>
                   <div>
-                    <CardTitle className="text-lg">Maria Rodriguez</CardTitle>
+                    <CardTitle className="text-lg">Maria</CardTitle>
                     <CardDescription>Founder at MathIndices</CardDescription>
                   </div>
                 </div>
