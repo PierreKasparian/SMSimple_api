@@ -13,6 +13,11 @@
     {
       "src": "/sms-api/(.*)",
       "dest": "sms-api/main.py"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1",
+      "continue": true
     }
   ]
 }
