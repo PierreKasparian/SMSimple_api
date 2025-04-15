@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/card";
 import { MessageSquare, Zap, Shield, ArrowRight, User } from "lucide-react";
 import Navbar from "@/components/Navbar";
-import { createClient } from "@/utils/supabase/server";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 export default async function Home() {
 

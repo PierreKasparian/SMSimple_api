@@ -2,11 +2,6 @@ import { MessageSquare } from "lucide-react";
 import Link from "next/link";
 import { Button } from "./ui/button";
 
-type NavbarVariant = "default" | "auth";
-
-interface NavbarProps {
-  variant?: NavbarVariant;
-}
 
 const Navbar = () => {
   return (
