@@ -52,10 +52,10 @@ const page = async () => {
                     <Check className="h-4 w-4 mr-2 text-primary" />
                     <span>Validity: forever</span>
                   </li>
-                  <li className="flex items-center">
+                  {/* <li className="flex items-center">
                     <Check className="h-4 w-4 mr-2 text-primary" />
                     <span>Webhooks</span>
-                  </li>
+                  </li> */}
                 </ul>
               </CardContent>
               <CardFooter>
@@ -88,10 +88,10 @@ const page = async () => {
                     <Check className="h-4 w-4 mr-2 text-primary" />
                     <span>Email support</span>
                   </li>
-                  <li className="flex items-center">
+                  {/* <li className="flex items-center">
                     <Check className="h-4 w-4 mr-2 text-primary" />
                     <span>Webhooks</span>
-                  </li>
+                  </li> */}
                 </ul>
               </CardContent>
               <CardFooter>
@@ -126,10 +126,10 @@ const page = async () => {
                     <Check className="h-4 w-4 mr-2 text-primary" />
                     <span>Advanced email support</span>
                   </li>
-                  <li className="flex items-center">
+                  {/* <li className="flex items-center">
                     <Check className="h-4 w-4 mr-2 text-primary" />
                     <span>Webhooks</span>
-                  </li>
+                  </li> */}
                 </ul>
               </CardContent>
               <CardFooter>

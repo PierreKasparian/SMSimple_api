@@ -20,7 +20,7 @@ export async function POST(request: Request) {
       payment_method_types: ["card"],
       line_items: [
         {
-          price: credits === 60 ? process.env.STRIPE_PRICE_ID_60 : credits === 20 ? process.env.STRIPE_PRICE_ID_20 : process.env.STRIPE_PRICE_ID_2,
+          price: 'price_1RDpiBFAmNm60Mkos0NI6aXd',//credits === 60 ? process.env.STRIPE_PRICE_ID_60 : credits === 20 ? process.env.STRIPE_PRICE_ID_20 : process.env.STRIPE_PRICE_ID_2,
           quantity: 1,
         },
       ],
