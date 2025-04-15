@@ -134,7 +134,7 @@ async def sendsms(item: Item, api_key: str = Depends(get_api_key)):  # Add depen
         traceback.print_exc()
         try:
             supabase.table("API_KEY").update(
-                {"credits": credits + 1,"used_credits": used_credits - 1}).eq("user_id", user_id).execute()
+                {"credits": credits,"used_credits": used_credits}).eq("user_id", user_id).execute()
         except Exception as e:
             print("An error occured refunding the credits : ", e)
         raise HTTPException(
