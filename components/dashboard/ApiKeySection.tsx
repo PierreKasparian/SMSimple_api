@@ -1,3 +1,4 @@
+"use client"
 import { CheckCircle2 } from 'lucide-react'
 import React from 'react'
 import { AlertDescription } from '../ui/alert'
@@ -6,7 +7,7 @@ import { Button } from '../ui/button'
 import { Copy } from 'lucide-react'
 
 const ApiKeySection = ({apiKey}:{apiKey:string|undefined}) => {
-  
+    
   return (
     <section className="space-y-4">
         <div className="flex flex-col gap-2">

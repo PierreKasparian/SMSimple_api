@@ -13,13 +13,10 @@ import Navbar from "@/components/Navbar";
 import { createClient } from "@/utils/supabase/server";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 export default async function Home() {
-  const supabase = await createClient();
-
-  const { data, error } = await supabase.auth.getUser();
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Navbar variant={error || !data?.user ? "auth" : "default"} />
+      <Navbar />
 
       {/* Hero Section */}
       <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-white to-gray-50">
