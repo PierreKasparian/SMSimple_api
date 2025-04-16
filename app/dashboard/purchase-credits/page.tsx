@@ -55,7 +55,7 @@ const page = async () => {
                 </ul>
               </CardContent>
               <CardFooter>
-               <BuyButton user_id={user.data.user?.id} credits={2}/>
+               <BuyButton user_id={user.data.user?.id} credits={250}/>
               </CardFooter>
             </Card>
 
@@ -87,7 +87,7 @@ const page = async () => {
                 </ul>
               </CardContent>
               <CardFooter>
-                <BuyButton user_id={user.data.user?.id} credits={20}/>
+                <BuyButton user_id={user.data.user?.id} credits={1000}/>
               </CardFooter>
             </Card>
 
@@ -121,7 +121,7 @@ const page = async () => {
                 </ul>
               </CardContent>
               <CardFooter>
-                <BuyButton user_id={user.data.user?.id} credits={60}/>
+                <BuyButton user_id={user.data.user?.id} credits={2500}/>
               </CardFooter>
             </Card>
           </div>
