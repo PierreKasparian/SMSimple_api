@@ -108,7 +108,7 @@ console.log(response);`,
               <h4 className="font-medium mb-2">Request Body</h4>
               <ul className="list-disc list-inside space-y-1 text-sm">
                 <li>
-                  <span className="font-mono text-primary">to</span>: Recipient's phone number (E.164 format)
+                  <span className="font-mono text-primary">to</span>: Recipient&apos;s phone number (E.164 format)
                 </li>
                 <li>
                   <span className="font-mono text-primary">message</span>: The text message to send

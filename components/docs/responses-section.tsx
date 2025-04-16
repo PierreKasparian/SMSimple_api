@@ -59,13 +59,13 @@ export default function ResponsesSection() {
 
       <h3 className="text-xl font-semibold mt-6 mb-2">Successful Response</h3>
       <p className="mb-2">
-        When your SMS is sent successfully, you'll receive a 200 OK response with the following structure:
+        When your SMS is sent successfully, you&apos;ll receive a 200 OK response with the following structure:
       </p>
       <CodeBlock code={successResponse} language="json" />
 
       <h3 className="text-xl font-semibold mt-6 mb-2">Error Responses</h3>
       <p className="mb-4">
-        If there's an issue with your request, you'll receive one of the following error responses:
+        If there&apos;s an issue with your request, you&apos;ll receive one of the following error responses:
       </p>
 
       <div className="grid gap-4">
