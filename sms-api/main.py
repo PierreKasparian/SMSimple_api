@@ -96,7 +96,7 @@ def get_substract_creds(phone_number):
         return credits
     else:
         print("Could not determine region for phone number")
-        raise HTTPException(status_code=400, detail="Could not determine region for phone number")
+        raise HTTPException(status_code=400, detail="Could not determine region for phone number. See available regions here : https://smsimple-api.vercel.app/regions")
 def buy_phone_numbr(client):
     country_code = 'US'
 
