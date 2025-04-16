@@ -100,7 +100,7 @@ const page = async () => {
                 <CardTitle className="text-xl">Enterprise</CardTitle>
                 <CardDescription>For large-scale communications</CardDescription>
                 <div className="mt-4">
-                  <span className="text-4xl font-bold">45€</span>
+                  <span className="text-4xl font-bold">50€</span>
                 </div>
               </CardHeader>
               <CardContent className="flex-1">

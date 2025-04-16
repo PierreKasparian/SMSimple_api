@@ -71,7 +71,7 @@ export default function RegionsPricing() {
                   </tr>
                 </thead>
                 <tbody>
-                  {countries.map((country, index) => (
+                  {countries.map((country) => (
                     <tr
                       key={country.code}
                       className="border-b border-gray-200 transition-colors hover:bg-gray-50"
