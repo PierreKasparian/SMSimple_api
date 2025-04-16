@@ -161,12 +161,12 @@ async def sendsms(item: Item, api_key: str = Depends(get_api_key)):  # Add depen
 
     if not user_id:
         raise HTTPException(status_code=403, detail="Invalid API key")
-
-    if credits <= 0:
+    substract_creds = get_substract_creds(item.to)
+    if (credits-substract_creds) < 0:
         raise HTTPException(status_code=403, detail="Insufficient credits")
     
     try:
-        substract_creds = get_substract_creds(item.to)
+        
         supabase.table("API_KEY").update(
             {"credits": credits - substract_creds,"used_credits": used_credits + substract_creds}).eq("user_id", user_id).execute()
     except Exception as e:
