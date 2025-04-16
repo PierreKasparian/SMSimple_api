@@ -38,16 +38,12 @@ const page = async () => {
                 <CardTitle className="text-xl">Starter</CardTitle>
                 <CardDescription>Perfect for testing our service</CardDescription>
                 <div className="mt-4">
-                  <span className="text-4xl font-bold">2€</span>
+                  <span className="text-4xl font-bold">9€</span>
                 </div>
               </CardHeader>
               <CardContent className="flex-1">
-                <div className="text-2xl font-bold text-center mb-4">50 credits</div>
+                <div className="text-2xl font-bold text-center mb-4">250 credits</div>
                 <ul className="space-y-2 text-sm">
-                  <li className="flex items-center">
-                    <Check className="h-4 w-4 mr-2 text-primary" />
-                    <span>1 credit = 1 SMS</span>
-                  </li>
                   <li className="flex items-center">
                     <Check className="h-4 w-4 mr-2 text-primary" />
                     <span>Validity: forever</span>
@@ -70,16 +66,12 @@ const page = async () => {
                 <CardTitle className="text-xl">Professional</CardTitle>
                 <CardDescription>For growing businesses</CardDescription>
                 <div className="mt-4">
-                  <span className="text-4xl font-bold">20€</span>
+                  <span className="text-4xl font-bold">27€</span>
                 </div>
               </CardHeader>
               <CardContent className="flex-1">
                 <div className="text-2xl font-bold text-center mb-4">1000 credits</div>
                 <ul className="space-y-2 text-sm">
-                  <li className="flex items-center">
-                    <Check className="h-4 w-4 mr-2 text-primary" />
-                    <span>1 credit = 1 SMS</span>
-                  </li>
                   <li className="flex items-center">
                     <Check className="h-4 w-4 mr-2 text-primary" />
                     <span>Validity: forever</span>
@@ -108,16 +100,12 @@ const page = async () => {
                 <CardTitle className="text-xl">Enterprise</CardTitle>
                 <CardDescription>For large-scale communications</CardDescription>
                 <div className="mt-4">
-                  <span className="text-4xl font-bold">60€</span>
+                  <span className="text-4xl font-bold">45€</span>
                 </div>
               </CardHeader>
               <CardContent className="flex-1">
-                <div className="text-2xl font-bold text-center mb-4">5000 credits</div>
+                <div className="text-2xl font-bold text-center mb-4">2500 credits</div>
                 <ul className="space-y-2 text-sm">
-                  <li className="flex items-center">
-                    <Check className="h-4 w-4 mr-2 text-primary" />
-                    <span>1 credit = 1 SMS</span>
-                  </li>
                   <li className="flex items-center">
                     <Check className="h-4 w-4 mr-2 text-primary" />
                     <span>Validity: forever</span>
@@ -146,6 +134,8 @@ const page = async () => {
               <Link href="mailto:ia.school.app@gmail.com" className="text-primary font-medium hover:underline">
                 Contact our sales team
               </Link>
+              <br />
+              See our pricing by country <Link href="/regions" className="text-primary font-medium hover:underline">here</Link>
             </p>
           </div>
       </section>

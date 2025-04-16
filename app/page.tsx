@@ -318,7 +318,7 @@ console.log(response);`}
                   Perfect for testing our service
                 </CardDescription>
                 <div className="mt-4">
-                  <span className="text-4xl font-bold">2€</span>
+                  <span className="text-4xl font-bold">9€</span>
                 </div>
               </CardHeader>
               <CardContent className="flex-1">
@@ -338,7 +338,7 @@ console.log(response);`}
                     >
                       <polyline points="20 6 9 17 4 12"></polyline>
                     </svg>
-                    <span>50 SMS</span>
+                    <span>250 credits</span>
                   </li>
                   <li className="flex items-center">
                     <svg
@@ -358,7 +358,7 @@ console.log(response);`}
                     <span>Validity: forever</span>
                   </li>
 
-                  <li className="flex items-center">
+                  {/* <li className="flex items-center">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -374,7 +374,7 @@ console.log(response);`}
                       <polyline points="20 6 9 17 4 12"></polyline>
                     </svg>
                     <span>Webhooks</span>
-                  </li>
+                  </li> */}
                 </ul>
               </CardContent>
               <CardFooter>
@@ -393,7 +393,7 @@ console.log(response);`}
                 <CardTitle className="text-xl">Professional</CardTitle>
                 <CardDescription>Ideal for growing businesses</CardDescription>
                 <div className="mt-4">
-                  <span className="text-4xl font-bold">20€</span>
+                  <span className="text-4xl font-bold">27€</span>
                 </div>
               </CardHeader>
               <CardContent className="flex-1">
@@ -413,7 +413,7 @@ console.log(response);`}
                     >
                       <polyline points="20 6 9 17 4 12"></polyline>
                     </svg>
-                    <span>1000 SMS</span>
+                    <span>1000 credits</span>
                   </li>
                   <li className="flex items-center">
                     <svg
@@ -450,7 +450,7 @@ console.log(response);`}
                     <span>Email support</span>
                   </li>
 
-                  <li className="flex items-center">
+                  {/* <li className="flex items-center">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -466,7 +466,7 @@ console.log(response);`}
                       <polyline points="20 6 9 17 4 12"></polyline>
                     </svg>
                     <span>Webhooks</span>
-                  </li>
+                  </li> */}
                 </ul>
               </CardContent>
               <CardFooter>
@@ -482,7 +482,7 @@ console.log(response);`}
                 <CardTitle className="text-xl">Enterprise</CardTitle>
                 <CardDescription>For large-scale operations</CardDescription>
                 <div className="mt-4">
-                  <span className="text-4xl font-bold">60€</span>
+                  <span className="text-4xl font-bold">45€</span>
                 </div>
               </CardHeader>
               <CardContent className="flex-1">
@@ -502,7 +502,7 @@ console.log(response);`}
                     >
                       <polyline points="20 6 9 17 4 12"></polyline>
                     </svg>
-                    <span>5000 SMS</span>
+                    <span>2500 credits</span>
                   </li>
 
                   <li className="flex items-center">
@@ -539,7 +539,7 @@ console.log(response);`}
                     </svg>
                     <span>Advanced email support</span>
                   </li>
-                  <li className="flex items-center">
+                  {/* <li className="flex items-center">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -555,7 +555,7 @@ console.log(response);`}
                       <polyline points="20 6 9 17 4 12"></polyline>
                     </svg>
                     <span>Webhooks</span>
-                  </li>
+                  </li> */}
                 </ul>
               </CardContent>
               <CardFooter>
@@ -575,6 +575,8 @@ console.log(response);`}
               >
                 Contact our sales team
               </Link>
+              <br />
+              See our pricing by country <Link href="/regions" className="text-primary font-medium hover:underline">here</Link>
             </p>
           </div>
         </div>

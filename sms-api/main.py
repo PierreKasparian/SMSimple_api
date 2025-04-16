@@ -48,7 +48,55 @@ def send_SMS(client, message, to):
     print(message)
     return message
 
+COUNTRIES = os.getenv('COUNTRIES_CREDITS_PER_SMS')
 
+import json
+COUNTRIES = json.loads(COUNTRIES)
+import phonenumbers
+
+def get_phone_region_code(phone_number, default_region=None):
+    """
+    Get the region code (country code) associated with a phone number using libphonenumber.
+    
+    Args:
+        phone_number (str): The phone number to analyze
+        default_region (str, optional): Default region code if number lacks country code (e.g., 'US', 'GB')
+    
+    Returns:
+        str: The region code (e.g., 'US', 'GB') or None if couldn't determine
+    """
+    try:
+        parsed_number = phonenumbers.parse(phone_number, default_region)
+        return phonenumbers.region_code_for_number(parsed_number)
+    except phonenumbers.phonenumberutil.NumberParseException:
+        return None
+
+def get_credits_for_region(region_code):
+    """
+    Get the number of credits associated with a region code based on the countries list.
+    
+    Args:
+        region_code (str): The region code (e.g., 'US', 'GB')
+        countries_list (list): List of country objects with code and creditsPerSMS
+    
+    Returns:
+        int: The number of credits for the region, or default if region not found
+    """
+    # Find the country in the list that matches the region code
+    country = next((c for c in COUNTRIES if c['code'] == region_code), None)
+    if country:
+        return country['creditsPerSMS']
+    return 0  # Default credit value for unspecified regions
+
+def get_substract_creds(phone_number):
+    region = get_phone_region_code(phone_number)
+    if region:
+        credits = get_credits_for_region(region)
+        print(f"Region: {region}, Credits: {credits}")
+        return credits
+    else:
+        print("Could not determine region for phone number")
+        raise HTTPException(status_code=400, detail="Could not determine region for phone number")
 def buy_phone_numbr(client):
     country_code = 'US'
 
@@ -118,8 +166,9 @@ async def sendsms(item: Item, api_key: str = Depends(get_api_key)):  # Add depen
         raise HTTPException(status_code=403, detail="Insufficient credits")
     
     try:
+        substract_creds = get_substract_creds(item.to)
         supabase.table("API_KEY").update(
-            {"credits": credits - 1,"used_credits": used_credits + 1}).eq("user_id", user_id).execute()
+            {"credits": credits - substract_creds,"used_credits": used_credits + substract_creds}).eq("user_id", user_id).execute()
     except Exception as e:
         print("Error updating credits:", e)
         raise HTTPException(status_code=500, detail="Failed to update credits. SMS not sent")
