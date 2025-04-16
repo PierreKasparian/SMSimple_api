@@ -169,8 +169,9 @@ async def sendsms(item: Item, api_key: str = Depends(get_api_key)):  # Add depen
         
         supabase.table("API_KEY").update(
             {"credits": credits - substract_creds,"used_credits": used_credits + substract_creds}).eq("user_id", user_id).execute()
-    except Exception as e:
-        print("Error updating credits:", e)
+    except:
+        print("Error updating credits:")
+        traceback.print_exc()
         raise HTTPException(status_code=500, detail="Failed to update credits. SMS not sent")
     try:
         ans = send_SMS(client=client, message=item.message, to=item.to)
@@ -178,14 +179,14 @@ async def sendsms(item: Item, api_key: str = Depends(get_api_key)):  # Add depen
             "body": ans.body,
             "status": ans.status
         }
-    except Exception as e:
-        print("An error occurred:", e)
+    except:
         traceback.print_exc()
         try:
             supabase.table("API_KEY").update(
                 {"credits": credits,"used_credits": used_credits}).eq("user_id", user_id).execute()
-        except Exception as e:
-            print("An error occured refunding the credits : ", e)
+        except:
+            print("An error occured refunding the credits : ")
+            traceback.print_exc()
         raise HTTPException(
             status_code=500, detail="An error occured sending the SMS")
 
