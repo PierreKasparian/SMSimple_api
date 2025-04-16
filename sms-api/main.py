@@ -150,7 +150,7 @@ async def get_api_key(authorization: str = Header(None)):
     return api_key
 
 # Update the sendsms route to use the dependency
-@app.post("/sms-api/sendsms")
+@app.post("/sms-api/sendsms") 
 async def sendsms(item: Item, api_key: str = Depends(get_api_key)):  # Add dependency here
     # No need to check for api_key presence here since the dependency handles it
     if not item.to or not item.message:
