@@ -31,6 +31,12 @@ const Navbar = () => {
           >
             Pricing
           </Link>
+          <Link
+            href="/docs"
+            className="text-sm font-medium hover:underline underline-offset-4"
+          >
+            Documentation
+          </Link>
         </nav>
 
         <div className="flex items-center gap-4">

@@ -27,6 +27,9 @@ export function NavBar() {
           <Link href="/dashboard/purchase-credits" className="text-sm font-medium hover:text-primary transition-colors">
             Purchase Credits
           </Link>
+          <Link href="/docs" className="text-sm font-medium hover:text-primary transition-colors">
+            Documentation
+          </Link>
           <LogoutButton />
         </nav>
 
