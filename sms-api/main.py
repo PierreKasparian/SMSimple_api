@@ -86,7 +86,7 @@ def get_credits_for_region(region_code):
     country = next((c for c in COUNTRIES if c['code'] == region_code), None)
     if country:
         return country['creditsPerSMS']
-    return 0  # Default credit value for unspecified regions
+    raise HTTPException(status_code=400, detail="Could not determine region for phone number. See available regions here : https://smsimple-api.vercel.app/regions")
 
 def get_substract_creds(phone_number):
     region = get_phone_region_code(phone_number)
