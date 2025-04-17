@@ -71,18 +71,7 @@ const page = () => {
             </section>
 
             <section className="mb-8">
-                <h2 className="text-xl font-semibold mb-4">6. Your Rights</h2>
-                <p>You may:</p>
-                <ul className="list-disc pl-5 mb-4">
-                    <li>Access or delete your account data</li>
-                    <li>Request export of your transaction history</li>
-                    <li>Opt out of non-essential communications</li>
-                </ul>
-                <p>Contact us at [Your Email] to exercise these rights.</p>
-            </section>
-
-            <section className="mb-8">
-                <h2 className="text-xl font-semibold mb-4">7. Security</h2>
+                <h2 className="text-xl font-semibold mb-4">6. Security</h2>
                 <p>We implement measures including:</p>
                 <ul className="list-disc pl-5">
                     <li>Encryption in transit (HTTPS/TLS)</li>
@@ -92,12 +81,12 @@ const page = () => {
             </section>
 
             <section className="mb-8">
-                <h2 className="text-xl font-semibold mb-4">8. Changes to This Policy</h2>
+                <h2 className="text-xl font-semibold mb-4">7. Changes to This Policy</h2>
                 <p>We may update this policy. Continued use after changes constitutes acceptance.</p>
             </section>
 
             <section>
-                <h2 className="text-xl font-semibold mb-4">9. Contact Us</h2>
+                <h2 className="text-xl font-semibold mb-4">8. Contact Us</h2>
                 <p>Questions? Email <a href="mailto:ia.school.app@gmail.com" className="text-blue-600 hover:underline">ia.school.app@gmail.com</a>.</p>
             </section>
         </div>

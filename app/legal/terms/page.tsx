@@ -14,12 +14,11 @@ const page = () => {
         <div className="prose prose-lg">
             <section className="mb-8">
                 <h2 className="text-xl font-semibold mb-4">1. Service Overview</h2>
-                <p>SMSimple-API provides a simplified API for sending and receiving SMS messages. When you sign up, you receive <strong>3 free credits</strong> (1 credit = 1 SMS). Additional credits can be purchased on our website.</p>
+                <p>SMSimple-API provides a simplified API for sending and receiving SMS messages. When you sign up, you receive <strong>3 free credits</strong>. Additional credits can be purchased on our website.</p>
                 
                 <p className="mt-2">Key features:</p>
                 <ul className="list-disc pl-5">
                     <li>Send SMS to any phone number</li>
-                    <li>Receive replies via webhook (if configured in your dashboard)</li>
                     <li>No sender number control—messages are sent via our infrastructure</li>
                 </ul>
                 
@@ -33,6 +32,8 @@ const page = () => {
                     <li>You are responsible for maintaining account security and all activity under your account</li>
                     <li>Free credits are for evaluation only. Abuse (e.g., spam) will result in account termination</li>
                     <li>You must implement reasonable security measures to protect your account credentials</li>
+                    <li>You can only send SMS to phone numbers that you have permission to contact</li>
+                    <li>All messages sent via SMSimple-API must comply with local and international laws.</li>
                 </ul>
             </section>
 
@@ -53,6 +54,7 @@ const page = () => {
                     <li>Spam, phishing, or unsolicited messages (comply with <a href="https://help.twilio.com/articles/1260800720410-What-is-A2P-10DLC" className="text-blue-600 hover:underline">Twilio&apos;s A2P 10DLC</a> and carrier rules)</li>
                     <li>Harassment, threats, or violating privacy rights</li>
                     <li>Reverse-engineering or disrupting our service</li>
+                    <li>Messages containing URLs require account activation. Shortened URLs (e.g., bit.ly, tinyurl) are prohibited due to network restrictions. </li>
                 </ul>
                 <p>Violations may result in <strong>immediate suspension</strong> without refund.</p>
             </section>
@@ -114,8 +116,14 @@ const page = () => {
                 <p>We may update these Terms. Continued use after changes constitutes acceptance. We will notify users of material changes.</p>
             </section>
 
+            <section className="mb-8">
+                <h2 className="text-xl font-semibold mb-4">11. Acceptance of Terms</h2>
+                <p>By accessing or using SMSimple-API, you acknowledge that you have read, understood, and agree to be bound by these Terms. If you do not agree, you must discontinue your use of our services.</p>
+            </section>
+
+
             <section>
-                <h2 className="text-xl font-semibold mb-4">11. Contact</h2>
+                <h2 className="text-xl font-semibold mb-4">12. Contact</h2>
                 <p>Questions? Email us at <a href="mailto:ia.school.app@gmail.com" className="text-blue-600 hover:underline">ia.school.app@gmail.com</a>.</p>
                 <p className="mt-2"><em>SMSimple-API is not affiliated with Twilio Inc. Twilio&apos;s terms apply to underlying messaging services.</em></p>
             </section>
