@@ -162,8 +162,9 @@ async def sendsms(item: Item, api_key: str = Depends(get_api_key)):  # Add depen
     if not user_id:
         raise HTTPException(status_code=403, detail="Invalid API key")
     substract_creds = get_substract_creds(item.to)
+    print(f"Substract credits: {substract_creds}")
     if (credits-substract_creds) < 0:
-        raise HTTPException(status_code=403, detail="Insufficient credits")
+        raise HTTPException(status_code=403, detail="Insufficient credits. If your number of credits is below 8, please see here pricing per countries : https://smsimple-api.vercel.app/regions")
     
     try:
         
