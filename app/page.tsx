@@ -119,7 +119,7 @@ export default async function Home() {
               </div>
               <div className="p-6 pt-0">
                 <pre className="text-sm text-left overflow-x-auto">
-                  <code className="language-javascript">
+                  <code className="language-javascript whitespace-pre-wrap break-all">
                     {`// Send a message
 const url = "https://smsimple-api.vercel.app/sms-api/sendsms";
 const apiKey = "YOUR_API_KEY"; // Replace with your actual API key
