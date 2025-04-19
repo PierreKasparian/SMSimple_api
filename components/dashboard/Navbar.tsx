@@ -30,6 +30,9 @@ export function NavBar() {
           <Link href="/docs" className="text-sm font-medium hover:text-primary transition-colors">
             Documentation
           </Link>
+          <Link href="/regions" className="text-sm font-medium hover:text-primary transition-colors">
+            Regions
+          </Link>
           <LogoutButton />
         </nav>
 

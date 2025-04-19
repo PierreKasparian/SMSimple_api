@@ -37,6 +37,13 @@ const Navbar = () => {
           >
             Documentation
           </Link>
+          <Link
+            href="/regions"
+            className="text-sm font-medium hover:underline underline-offset-4"
+          >
+            Regions
+          </Link>
+          
         </nav>
 
         <div className="flex items-center gap-4">
