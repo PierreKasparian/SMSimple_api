@@ -23,8 +23,7 @@ export default async function Home() {
           <div className="flex flex-col items-center space-y-4 text-center">
             <div className="space-y-2">
               <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none mb-8">
-                SMS integration made{" "}
-                <span className="text-primary">simple</span>
+                <span className="text-primary">Simply</span>{" "}send SMS via API
               </h1>
               <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">
                 Powerful SMS API for developers. Send messages worldwide with
@@ -153,7 +152,7 @@ console.log(response);`}
                 Trusted by Developers
               </h2>
               <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                See what our customers have to say about our SMS API
+                See what our customers have to say about our <strong style={{fontWeight: "normal"}}>SMS API</strong>
               </p>
             </div>
           </div>
@@ -305,7 +304,7 @@ console.log(response);`}
                 Choose the plan that&apos;s right for your business. No hidden
                 fees or long-term contracts.
                 <br />
-                For each inscription, get 3 SMS for free to test our service.
+                For each sign-up, get 4 credits for free to test our service. Each credit is equivalent to a certain number of SMS, depending on the country.
               </p>
             </div>
           </div>
