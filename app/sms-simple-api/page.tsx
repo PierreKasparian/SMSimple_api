@@ -17,7 +17,7 @@ export default function GuidePage() {
       <main className="flex-1">
         <div className="px-4 md:px-6 py-12">
           <GuideHero
-            title="The Complete Guide to SMS APIs in 2024: Simple, Global, and Cost-Effective"
+            title="The Complete Guide to SMS APIs in 2025: Simple, Global, and Cost-Effective"
             subtitle="Everything you need to know about implementing SMS in your applications"
           />
 
