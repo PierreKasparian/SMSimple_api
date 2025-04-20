@@ -42,7 +42,7 @@ export default function ComparisonTable() {
             <TableCell className="font-medium">Documentation</TableCell>
             <TableCell>Thousands of pages across multiple products</TableCell>
             <TableCell className="font-semibold text-primary">
-              One copy/paste and you're done
+              One copy/paste and you&apos;re done
             </TableCell>
           </TableRow>
           <TableRow>
