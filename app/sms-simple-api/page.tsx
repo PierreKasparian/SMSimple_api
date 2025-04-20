@@ -30,7 +30,7 @@ export default function GuidePage() {
             >
               <p className="text-gray-700 leading-relaxed">
                 In an era where 95% of text messages are read within 3 minutes (Source: Gartner), automating SMS
-                communication isn't just convenient—it's a competitive necessity. Whether you're a developer building
+                communication isn&apos;t just convenient—it&apos;s a competitive necessity. Whether you&apos;re a developer building
                 two-factor authentication (2FA) for a SaaS product or a marketer streamlining campaign workflows, a
                 reliable SMS API bridges the gap between your systems and global mobile networks.
               </p>
@@ -135,7 +135,7 @@ export default function GuidePage() {
             >
               <p className="text-gray-700 leading-relaxed">
                 Twilio dominates the SMS API market, but its pricing and complexity leave room for leaner alternatives.
-                Here's a detailed breakdown:
+                Here&apos;s a detailed breakdown:
               </p>
 
               <div className="my-6">
@@ -228,7 +228,7 @@ console.log(response);`}
                   question="Can I send SMS via REST API without SDKs?"
                   answer={
                     <>
-                      <p>Absolutely. Here's a curl example:</p>
+                      <p>Absolutely. Here&apos;s a curl example:</p>
                       <div className="mt-2">
                         <CodeBlock
                           language="bash"
