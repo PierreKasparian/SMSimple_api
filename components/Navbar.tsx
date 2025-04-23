@@ -9,7 +9,7 @@ const Navbar = () => {
       <div className="flex h-16 items-center justify-between px-4 md:px-6">
         <Link href="/" className="flex items-center gap-2 font-bold text-xl">
           <MessageSquare className="h-6 w-6" />
-          <h1 className="text-2xl font-bold">SMSimple-API</h1>
+          <h5 className="text-2xl font-bold">SMSimple-API</h5>
         </Link>
 
         <nav className="hidden md:flex gap-6">
