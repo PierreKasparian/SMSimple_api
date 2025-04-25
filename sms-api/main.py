@@ -49,7 +49,7 @@ def send_SMS(client, message, to):
     return message
 
 COUNTRIES = os.getenv('COUNTRIES_CREDITS_PER_SMS')
-
+print(COUNTRIES)
 import json
 COUNTRIES = json.loads(COUNTRIES)
 import phonenumbers
