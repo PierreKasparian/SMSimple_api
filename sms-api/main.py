@@ -9,6 +9,7 @@ import os
 import bcrypt
 from supabase import create_client as create_supabase_client, Client as SupabaseClient
 from fastapi import FastAPI, HTTPException, Depends, Header  # Added Depends and Header
+from fastapi import Request
 
 load_dotenv()
 
@@ -35,7 +36,27 @@ app.add_middleware(
     expose_headers=["*"],
     max_age=600 # Cache preflight requests for 10 minutes
 )
-
+@app.middleware("http")
+async def catch_exceptions_middleware(request: Request, call_next):
+    try:
+        return await call_next(request)
+    except HTTPException as exc:
+        # Laisser passer les HTTPException pour qu'elles soient gérées par FastAPI
+        raise exc
+    except Exception as exc:
+        # Logger l'erreur et retourner une réponse 500
+        traceback.print_exc()
+        try:
+            supabase.table("LOGS").insert({
+                "error": traceback.format_exc()+ "l52",
+                "user_id": user_id if 'user_id' in locals() or 'user_id' in globals() else None  
+            }).execute()
+        except:
+            print("Failed to log error to Supabase")
+        return JSONResponse(
+            status_code=500,
+            content={"detail": "An internal server error occurred"}
+        )
 
 def send_SMS(client, message, to):
 
@@ -49,7 +70,6 @@ def send_SMS(client, message, to):
     return message
 
 COUNTRIES = os.getenv('COUNTRIES_CREDITS_PER_SMS')
-print(COUNTRIES)
 import json
 COUNTRIES = json.loads(COUNTRIES)
 import phonenumbers
@@ -97,6 +117,7 @@ def get_substract_creds(phone_number):
     else:
         print("Could not determine region for phone number")
         raise HTTPException(status_code=400, detail="Could not determine region for phone number. See available regions here : https://smsimple-api.vercel.app/regions")
+
 def buy_phone_numbr(client):
     country_code = 'US'
 
@@ -131,7 +152,7 @@ def authenticate_user(provided_key: str):
             # Skip invalid hashes and continue checking other records
             continue
 
-    return None,None  # No match found
+    return None,None,None  # No match found
 
 
 
@@ -153,26 +174,59 @@ async def get_api_key(authorization: str = Header(None)):
 @app.post("/sms-api/sendsms") 
 async def sendsms(item: Item, api_key: str = Depends(get_api_key)):  # Add dependency here
     # No need to check for api_key presence here since the dependency handles it
+
     if not item.to or not item.message:
+        supabase.table("LOGS").insert(
+            {"to":item.to,
+            "message":item.message,
+            "error":"Missing \"to\" or \"message\" required fields. l161"}
+        ).execute()
         raise HTTPException(
             status_code=400, detail="Missing \"to\" or \"message\" required fields")
 
     user_id, credits,used_credits = authenticate_user(api_key)  # Use the api_key from the dependency
 
     if not user_id:
+        supabase.table("LOGS").insert(
+            {"to":item.to,
+            "message":item.message,
+            "error":"Invalid API key",
+            "before_creds":credits,
+            "after_creds": credits,
+            }
+        ).execute()
+
         raise HTTPException(status_code=403, detail="Invalid API key")
     substract_creds = get_substract_creds(item.to)
     print(f"Substract credits: {substract_creds}")
     if (credits-substract_creds) < 0:
+        supabase.table("LOGS").insert(
+            {"to":item.to,
+            "message":item.message,
+            "user_id":user_id,
+            "error":"Insufficient credits. If your number of credits is below 8, please see here pricing per countries : https://smsimple-api.vercel.app/regions. l188",
+            "before_creds":credits,
+            "after_creds": credits,
+            }
+        ).execute()
         raise HTTPException(status_code=403, detail="Insufficient credits. If your number of credits is below 8, please see here pricing per countries : https://smsimple-api.vercel.app/regions")
     
     try:
-        
         supabase.table("API_KEY").update(
             {"credits": credits - substract_creds,"used_credits": used_credits + substract_creds}).eq("user_id", user_id).execute()
     except:
         print("Error updating credits:")
         traceback.print_exc()
+        supabase.table("LOGS").insert(
+            {"to":item.to,
+            "message":item.message,
+            "user_id":user_id,
+            "error":traceback.format_exc() + " l205",
+            "before_creds":credits,
+            "after_creds": credits,
+            }
+        ).execute()
+
         raise HTTPException(status_code=500, detail="Failed to update credits. SMS not sent")
     try:
         ans = send_SMS(client=client, message=item.message, to=item.to)
@@ -185,12 +239,35 @@ async def sendsms(item: Item, api_key: str = Depends(get_api_key)):  # Add depen
         try:
             supabase.table("API_KEY").update(
                 {"credits": credits,"used_credits": used_credits}).eq("user_id", user_id).execute()
+            supabase.table("LOGS").insert(
+                {"to":item.to,
+                "message":item.message,
+                "user_id":user_id,
+                "error":traceback.format_exc() + " l227",
+                "before_creds":credits,
+                "after_creds": credits,
+                }
+            ).execute()
+
         except:
             print("An error occured refunding the credits : ")
             traceback.print_exc()
+        
         raise HTTPException(
             status_code=500, detail="An error occured sending the SMS")
-
+    try:
+        supabase.table("LOGS").insert(
+            {"to":item.to,
+            "message":item.message,
+            "user_id":user_id,
+            "error":traceback.format_exc() + " l244. Success",
+            "before_creds":credits,
+            "after_creds": credits-substract_creds,
+            }
+        ).execute()
+    except:
+        print("An error occured logging the SMS : ")
+        traceback.print_exc()
     return {"response":response_sms}
     
 @app.get("/sms-api/healthcheck")
