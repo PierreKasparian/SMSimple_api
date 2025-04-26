@@ -54,7 +54,7 @@ export default async function Home() {
                 Powerful Features
               </h2>
               <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                Everything you need to integrate SMS into your applications
+              Everything you need to send SMS for 2FA, marketing, and more.
               </p>
             </div>
           </div>
