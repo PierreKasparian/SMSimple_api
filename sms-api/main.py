@@ -226,7 +226,6 @@ async def sendsms(item: Item, api_key: str = Depends(get_api_key)):  # Add depen
             "after_creds": credits,
             }
         ).execute()
-
         raise HTTPException(status_code=500, detail="Failed to update credits. SMS not sent")
     try:
         ans = send_SMS(client=client, message=item.message, to=item.to)
